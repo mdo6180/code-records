@@ -1,0 +1,10 @@
+type Query {
+    platform: String!
+    users(username: String, firstname: String, lastname: String): [User]
+}
+
+type User {
+    username: String!
+    firstname: String!
+    lastname: String!
+}
