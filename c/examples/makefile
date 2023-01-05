@@ -1,8 +1,8 @@
 all:
-	gcc -o raw_pointer raw_pointer.c
+	gcc -o ./bin/linkedlist ./src/linkedlist.c
 
 debug:
-	gcc -g -o raw_pointer raw_pointer.c
+	gcc -g -o ./bin/linkedlist ./src/linkedlist.c
 
 clean:
-	rm raw_pointer
+	rm ./bin/linkedlist
