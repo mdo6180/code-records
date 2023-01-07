@@ -29,60 +29,72 @@ public:
         this->sorted = sorted;
     }
 
-    void add(std::vector<int>& data){
+    void add(int data){
+        Node* newNode = new Node(data, nullptr);
+
+        if (this->head == nullptr){
+            this->head = newNode;
         
-        for (int i : data){
-            auto node = std::make_unique<Node>(i, nullptr);
-
-            if (this->head == nullptr){
-                std::cout << "head is null" << std::endl;
-                this->head = node.get();
-            
-            } else {
-                std::cout << "current = " << this->head->data << std::endl;
-                if (this->sorted == 0){
-                    auto current = this->head;
-                    while (current->next != nullptr){
-                        current = current->next;
-                    }
-                    current->next = node.get();
+        } else {
+            if (this->sorted == 0) {
+                Node* current = this->head;
+                while (current->next != NULL) {
+                    current = current->next;
                 }
-                
-            }
-            std::cout << "head " << this->head->data << std::endl;
-        }
+                current->next = newNode;
 
-        std::cout << "printing list ran" << std::endl;
-        auto current = this->head;
-        int i = 0;
-        while (current->next != nullptr){
-            std::cout << "Node " << i << ": " << current->data << std::endl;
-            i++;
-            current = current->next;
-        } 
+            } else if (this->sorted == 1) {
+                Node* current = this->head;
+                while (current->next != nullptr) {
+                    if (current->next->data > data) {
+                        newNode->next = current->next;
+                        current->next = newNode;
+                        return;
+                    }
+                    current = current->next;
+                }
+                current->next = newNode;
+            }
+        }
     }
 
     void printList(){
-        std::cout << "printList() ran" << std::endl;
-        auto current = this->head;
-        int i = 0;
-        while (current->next != nullptr){
-            std::cout << "Node " << i << ": " << current->data << std::endl;
-            i++;
+        Node* current = this->head;
+    
+        int index = 0; 
+        while (current != nullptr) {
+            std::cout << "Node " << index << " = " << current->data << std::endl;
+            index++;
             current = current->next;
-        } 
+        }
     }
 
     ~LinkedList(){
+        if (this->head != nullptr) {
+            Node* current = this->head;
+            Node* next = nullptr;
+
+            while (current->next != nullptr) {
+                next = current->next;
+                delete current;
+                current = next;
+            }
+            
+            delete current;
+        }
+        
         std::cout << "Linked list deleted" << std::endl;
     }
 };
 
 int main(){
-    LinkedList list = LinkedList(0);
+    LinkedList list = LinkedList(1);
+    list.add(1);
+    list.add(2);
+    list.add(6);
+    list.add(5);
+    list.add(4);
 
-    std::vector<int> elements = {1,2,3,4,5};
-    list.add(elements);
     list.printList();
 
     return 0;
