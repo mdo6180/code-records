@@ -5,7 +5,7 @@ pub struct SLLNode {
     pub next: Option<Box<SLLNode>>,
 }
 
-pub struct SLL {
+pub struct SinglyLinkedList {
     pub head: Option<Box<SLLNode>>,
     pub num_elements: i32
 }
@@ -19,9 +19,9 @@ impl SLLNode {
     }
 }
 
-impl SLL {
-    pub fn new() -> SLL {
-        SLL {
+impl SinglyLinkedList {
+    pub fn new() -> SinglyLinkedList {
+        SinglyLinkedList {
             head: None,
             num_elements: 0
         }
@@ -38,15 +38,21 @@ impl SLL {
             self.num_elements += 1;
         
         } else {
+            // use .as_mut() to create a &mut (mutable reference) to the Box value (aka the head)
             let mut current = self.head.as_mut();
 
             loop {
                 match current {
                     Some(node) => {
+                        // checks if the next node is None,
+                        // if it is not None, set current to a &mut of the next node.
+                        // if it is None, we are at the end of the list, 
+                        // thus, set the next parameter to another node
                         if node.next.is_some() {
                             current = node.next.as_mut();
                         } else {
                             node.next = Some(Box::new(SLLNode::new(value, None)));
+                            self.num_elements += 1;
                             break;
                         }
                     },
@@ -75,6 +81,14 @@ impl SLL {
                     }
                 };
             }
+        } else {
+            println!("List is empty");
         }
     }
 }
+
+/*
+fn print_type_of<T>(_: &T) {
+    println!("{}", std::any::type_name::<T>())
+}
+*/
