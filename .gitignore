@@ -3,3 +3,6 @@
 **/bin
 **.dSYM
 **/target
+
+C/lex-yacc/lex.yy.c
+C/lex-yacc/first
