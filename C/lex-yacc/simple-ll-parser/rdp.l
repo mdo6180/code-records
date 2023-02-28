@@ -36,6 +36,7 @@ int main() {
     } else {
         printf("rejected\n");
     }
+    printf("EOF = %d\n", EOF);
 }
 
 void match(int token) {
@@ -64,7 +65,7 @@ void EL() {
 }
 
 void Ex() {
-    if ((lookahead == LP)||(lookahead==INT)) { 
+    if ((lookahead == LP)||(lookahead == INT)) { 
         E(); 
         match(EQUAL);
     } else {
@@ -73,7 +74,7 @@ void Ex() {
 }
 
 void E() {
-    if ((lookahead == LP)||(lookahead==INT)) { 
+    if ((lookahead == LP)||(lookahead == INT)) { 
         T(); 
         E_p();
     } else {
@@ -96,7 +97,7 @@ void E_p() {
 }
 
 void T() {
-    if ((lookahead == LP)||(lookahead==INT)) { 
+    if ((lookahead == LP)||(lookahead == INT)) { 
         F(); 
         T_p();
     }

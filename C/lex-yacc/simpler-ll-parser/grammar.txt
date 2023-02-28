@@ -1,0 +1,5 @@
+Production             Predict
+S --> aB
+S --> bC
+B --> bbC
+C --> cc
