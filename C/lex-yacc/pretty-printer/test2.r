@@ -1,0 +1,14 @@
+fn test (a: i32, b:str ) -> i32 { 
+	if (a==2) 
+	{println(b);}
+	else 
+	{println(b);}
+		a;
+}
+
+
+
+fn main ( ) {
+	let mut a = 2 + 2 ; let a = test(5,"test") + a; println(test(2,"help"));
+}
+
