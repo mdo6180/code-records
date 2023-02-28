@@ -1,0 +1,14 @@
+Production             Predict
+EL --> Ex EL          ( INT
+    |                 EOF
+Ex --> E =            ( INT
+E --> T E'            ( INT
+E' --> + T E'         +
+    |  - T E'         -
+    |                 = )
+T --> F T'            ( INT
+T' --> * F T'         *
+    |  / F T'         /
+    |                 = )
+F --> ( E )           (
+    | INT             INT
