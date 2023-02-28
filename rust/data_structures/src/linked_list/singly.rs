@@ -79,18 +79,15 @@ impl SinglyLinkedList {
             }
             
             if self.sorted {
-                /*
                 let mut current = self.head.as_mut();
                 let mut current_val: Option<i32> = None;
 
                 loop {
                     match current {
-                        Some(node) => {
-
+                        Some(&mut *node) => {
                             match &node.next {
                                 Some(next) => {
-
-                                    println!("Node = {}", next);
+                                    println!("Node = {}", next.to_string());
                                     current = node.next.as_mut();
                                 },
                                 None => {
@@ -103,7 +100,6 @@ impl SinglyLinkedList {
                         }
                     };
                 }
-                */
 
             } else {
                 let mut current = self.head.as_mut();
