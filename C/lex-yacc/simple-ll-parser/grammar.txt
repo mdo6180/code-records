@@ -12,3 +12,7 @@ T' --> * F T'         *
     |                 = )
 F --> ( E )           (
     | INT             INT
+
+note that in the code, 
+whenever the empty string symbol is encountered, 
+the function just simply calls "return;" for the case of the empty string symbol.
