@@ -8,7 +8,7 @@
 [a]	{return('a');}
 [b] {return('b');}
 [c] {return('c');}
-[\n] 	lineno++;
+[\n] {lineno++;}
 .	;
 %%
 

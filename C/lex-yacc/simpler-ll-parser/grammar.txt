@@ -1,5 +1,6 @@
 Production             Predict
-S --> aB
-S --> bC
+S --> aB | bC
 B --> bbC
 C --> cc
+
+language = {abbcc, bcc}

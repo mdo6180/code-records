@@ -7,8 +7,11 @@ parse:
 compile: parse
 	gcc lex.yy.c -o rdp -ll
 
-test-accept: compile
-	./rdp < example-accept.txt
+test-accept-1: compile
+	./rdp < example-accept-1.txt
+
+test-accept-2: compile
+	./rdp < example-accept-2.txt
 
 test-reject: compile
 	./rdp < example-reject.txt
