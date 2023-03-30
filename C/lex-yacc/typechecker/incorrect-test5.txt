@@ -1,0 +1,4 @@
+key: ^integer ;
+a: array [20] of integer;
+b: array[40] of ^ integer;
+b[a[key]]
