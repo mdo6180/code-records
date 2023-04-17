@@ -58,6 +58,20 @@ public:
         }
     }
 
+    void reverse() {
+        Node* prev = nullptr;
+        Node* current = this->head;
+        Node* next = nullptr;
+
+        while (current != nullptr) {
+            this->head = current;
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+    }
+
     void printList(){
         Node* current = this->head;
     
@@ -95,6 +109,11 @@ int main(){
     list.add(5);
     list.add(4);
 
+    list.printList();
+
+    std::cout << "----------------------------" << std::endl;
+
+    list.reverse();
     list.printList();
 
     return 0;
