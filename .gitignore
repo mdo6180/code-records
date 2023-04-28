@@ -1,8 +1,9 @@
 **/__pycache__/**
-.vscode
 **/bin
 **.dSYM
 **/target
 
 C/lex-yacc/lex.yy.c
 C/lex-yacc/first
+a.out
+main
