@@ -18,15 +18,17 @@ def worker(barrier):
 # Note: number of parties in the barrier must be equal to the number of threads
 barrier = threading.Barrier(NUM_THREADS)
 
-# Create and start the threads
-threads = []
-for i in range(NUM_THREADS):
-    thread = threading.Thread(target=worker, args=(barrier,))
-    threads.append(thread)
-    thread.start()
+for i in range(3):
+    # Create and start the threads
+    threads = []
+    for i in range(NUM_THREADS):
+        thread = threading.Thread(target=worker, args=(barrier,))
+        threads.append(thread)
+        thread.start()
 
-# Wait for all threads to finish
-for thread in threads:
-    thread.join()
+    # Wait for all threads to finish
+    for thread in threads:
+        thread.join()
 
-print("All threads have passed the barrier.")
+    barrier.reset()  # Reset the barrier
+    print("All threads have passed the barrier.")
