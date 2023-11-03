@@ -1,7 +1,10 @@
-class Parent:
+class Parent1:
     pass
 
-class Child(Parent):
+class Parent2:
+    pass
+
+class Child(Parent1, Parent2):
     pass
 
 class GrandChild(Child):
@@ -12,4 +15,5 @@ class GreatGrandChild(Child):
 
 obj = GreatGrandChild()
 
-print(isinstance(obj, Parent)) # True
+print(isinstance(obj, Parent1)) # True
+print(isinstance(obj, Parent2)) # True
