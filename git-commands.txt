@@ -1,0 +1,38 @@
+git add <path>: add path to staging
+git commit -m "<message>": create a commit with a message
+git commit -am "<message>": adds all files to staging area and create commit with a message (note: new files will still need to be added to staging area with git add)
+
+git checkout -b <branch name>: create a new branch
+git checkout <commit hash>: revert back to a commit
+
+git log: display a log of all the git commits
+git log --graph --pretty=oneline --abbrev-commit: display git tree
+git log --graph --oneline --all: disphay git tree
+
+location of global .gitconfig file: ~/.gitconfig
+location of local .gitconfig file: path/to/project/.git/config
+
+
+
+
+typical workflows:
+
+checking out a previous commit in the same branch:
+$ git log (list all commits and find the right commit hash)
+$ git checkout <commit hash> (revert back to the desired commit)
+$ git checkout <branch name> (move head back to the most recent commit in the branch)
+
+stashing changes:
+$ git stash list (list all stash entries)
+$ git stash (discard local changes and push changes onto stash list)
+$ git stash pop (pop changes of the stash list apply changes back into working area. Note: git stash apply does not remove stash entry from stash list.)
+
+
+
+
+miscellaneous workflows:
+
+setting up git tree alias:
+add in the following lines into ~/.gitconfig file:
+[alias]
+    tree = log --graph --decorate --pretty=oneline --abbrev-commit
