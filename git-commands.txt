@@ -26,6 +26,7 @@ stashing changes:
 $ git stash list (list all stash entries)
 $ git stash (discard local changes and push changes onto stash list)
 $ git stash pop (pop changes of the stash list apply changes back into working area. Note: git stash apply does not remove stash entry from stash list.)
+$ git stash drop stash@{3} (delete an entry from the stash list)
 
 
 
