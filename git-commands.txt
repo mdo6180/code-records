@@ -7,7 +7,7 @@ git checkout <commit hash>: revert back to a commit
 
 git log: display a log of all the git commits
 git log --graph --pretty=oneline --abbrev-commit: display git tree
-git log --graph --oneline --all: disphay git tree
+git log --graph --oneline --all: display git tree
 
 location of global .gitconfig file: ~/.gitconfig
 location of local .gitconfig file: path/to/project/.git/config
@@ -28,7 +28,9 @@ $ git stash (discard local changes and push changes onto stash list)
 $ git stash pop (pop changes of the stash list apply changes back into working area. Note: git stash apply does not remove stash entry from stash list.)
 $ git stash drop stash@{3} (delete an entry from the stash list)
 
-
+tagging a commit:
+$ git tag (list tags)
+$ git tag -a v1.4 -m "my version 1.4" (create a tag with a message)
 
 
 miscellaneous workflows:
