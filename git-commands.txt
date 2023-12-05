@@ -32,6 +32,13 @@ tagging a commit:
 $ git tag (list tags)
 $ git tag -a v1.4 -m "my version 1.4" (create a tag with a message)
 
+fetching a remote branch (i.e., when someone else creates a remote branch and you have to pull the branch to your local repo)
+$ git fetch <remote> <remote_branch>:<local_branch>
+$ git checkout <local_branch>
+Note: the fetch command would look something like this:
+$ git fetch https://github.com/anacostiaAI/anacostia-pipeline.git feature/web_backend:feature/web_backend
+$ git checkout feature/web_backend
+Note: local branch does not have to have the same name as remote branch but best to keep the branches named the same
 
 miscellaneous workflows:
 
