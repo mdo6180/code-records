@@ -1,0 +1,9 @@
+Installing project as a package:
+$ cd <directory with setup.py>
+$ pip install -e .[web]
+
+Note: may need to escape square brackets like so:
+$ pip install -e .\[web\]
+
+Note: install project inside virtual environment
+
