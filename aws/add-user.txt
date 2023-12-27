@@ -1,0 +1,37 @@
+Setup guide
+
+Adding new user to instance:
+
+Step 1: create IAM user
+https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
+Note: make sure user is in the same region, e.g., in the case of northern Virginia, its us-east-1
+Test: check if new user can see and turn on the instance in the console
+
+Step 2: creating new user / deleting user on EC2 instance
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html
+
+Step 3: creating new key pair
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#having-ec2-create-your-key-pair
+Note: user will have to manually run chmod 400 on their end
+
+Step 4: create user in instance
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/managing-users.html
+Note: log in as ec2-user (aka root user), then create the user
+
+Step 5: Giving users sudo access
+https://www.baeldung.com/linux/sudo-privileges-user
+Test: check if user can now log onto instance
+Note: sudoers file is at /etc/sudoers
+Note: run "sudo visudo" to edit the /etc/sudoers file
+Note: copy last two lines to enable user to access without a password
+
+Bonus: 
+setting up alarm to automatically shutdown EC2 instance
+https://successengineer.medium.com/how-to-automatically-turn-off-your-ec2-instance-in-2021-b73374e51090
+Tip: use Network In data instead of CPU Utilization
+
+Generate SSH key
+https://docs.gitlab.com/ee/user/ssh.html#generate-an-ssh-key-pair
+
+Add SSH key to gitlab account
+https://docs.gitlab.com/ee/user/ssh.html#add-an-ssh-key-to-your-gitlab-account
