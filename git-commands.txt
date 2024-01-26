@@ -29,7 +29,7 @@ $ git stash pop (pop changes of the stash list apply changes back into working a
 $ git stash drop stash@{3} (delete an entry from the stash list)
 
 tagging a commit:
-$ git tag (list tags)
+$ git tag -n (list tags)
 $ git tag -a v1.4 -m "my version 1.4" (create a tag with a message)
 
 fetching a remote branch (i.e., when someone else creates a remote branch and you have to pull the branch to your local repo)
