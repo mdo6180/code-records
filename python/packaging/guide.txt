@@ -1,0 +1,41 @@
+building package and uploading to PyPI:
+https://packaging.python.org/en/latest/tutorials/packaging-projects/#uploading-your-project-to-pypi
+
+make sure to install build, twine, and wheel
+$ pip install build
+$ pip install twine
+$ pip install wheel
+
+create a setup.py file (see the setup.py file in this directory)
+create a pyproject.toml file (see the pyproject.toml file in this directory)
+
+create ~/.pypirc file (config file for PyPI so you don't have to keep entering your password)
+note: API token in ~/.pypirc file must have pypi- prefix
+[pypi]
+username = __token__
+password = <API token>
+
+[pypitest]
+username = [your username]
+password = [your password]
+
+build wheel (note: this should create a folder called dist/)
+$ python3 -m build 
+
+If rebuilding the package, do the following:
+1. change the version number.
+2. delete the dist/ folder (if present).
+
+upload package onto PyPI
+$ twine upload dist/*
+
+note: if .pypirc file isn't in ~; we can still use it like so:
+$ twine upload --config-file=.pypirc dist/*
+
+testing to see if the distribution works:
+
+create a virtual environment
+$ python3 -m venv virtualenv
+
+install the package
+$ pip install <package name>
