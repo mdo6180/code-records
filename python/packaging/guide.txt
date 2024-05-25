@@ -39,3 +39,7 @@ $ python3 -m venv virtualenv
 
 install the package
 $ pip install <package name>
+
+Note: link to help page
+https://pypi.org/help/#apitoken
+
