@@ -30,6 +30,10 @@ def home():
 @app.get("/button", response_class=HTMLResponse)
 def button():
     return f'''
+        <!-- 
+        Note: setting hx-swap-oob="true" will work as well because true and outerHTML is equivalent.
+        Thus, <div id="oob" hx-swap-oob="outerHTML">Clicked</div> or <div id="oob" hx-swap-oob="true">Clicked</div> will also work here
+        -->
         <div id="oob" hx-swap-oob="outerHTML:#oob">Clicked</div>
         <button hx-get="/button" hx-swap="outerHTML" hx-target="this" hx-trigger="click">Clicked</button>
     '''

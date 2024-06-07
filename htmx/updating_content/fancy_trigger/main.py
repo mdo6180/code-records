@@ -20,10 +20,10 @@ def home():
             <script src="/static/js/htmx.js" type="text/javascript"></script>
         </head>
         <body>
-            <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn"></div>
-            <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn"></div>
-            <button id="node1-btn" hx-get="/button/node1" hx-swap-oob="outerHTML:#node1-btn" hx-trigger="click">Click node1</button>
-            <button id="node2-btn" hx-get="/button/node2" hx-swap-oob="outerHTML:#node2-btn" hx-trigger="click">Click node2</button>
+            <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn" hx-swap-oob="true"></div>
+            <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn" hx-swap-oob="true"></div>
+            <button id="node1-btn" hx-get="/button/node1" hx-trigger="click" hx-swap-oob="true">Click node1</button>
+            <button id="node2-btn" hx-get="/button/node2" hx-trigger="click" hx-swap-oob="true">Click node2</button>
         </body>
     </html>
     '''
@@ -33,13 +33,13 @@ def home():
 def button(node_clicked: str):
     if node_clicked == "node1":
         return """
-        <button id="node1-btn" hx-get="/button/node1" hx-swap-oob="outerHTML:#node1-btn" hx-trigger="click">node1 Clicked</button>
-        <button id="node2-btn" hx-get="/button/node2" hx-swap-oob="outerHTML:#node2-btn" hx-trigger="click">Click node2</button>
+        <button id="node1-btn" hx-get="/button/node1" hx-trigger="click" hx-swap-oob="true">node1 Clicked</button>
+        <button id="node2-btn" hx-get="/button/node2" hx-trigger="click" hx-swap-oob="true">Click node2</button>
         """
     else:
         return """
-        <button id="node1-btn" hx-get="/button/node1" hx-swap-oob="outerHTML:#node1-btn" hx-trigger="click">Click node1</button>
-        <button id="node2-btn" hx-get="/button/node2" hx-swap-oob="outerHTML:#node2-btn" hx-trigger="click">node2 Clicked</button>
+        <button id="node1-btn" hx-get="/button/node1" hx-trigger="click" hx-swap-oob="true">Click node1</button>
+        <button id="node2-btn" hx-get="/button/node2" hx-trigger="click" hx-swap-oob="true">node2 Clicked</button>
         """
 
 
@@ -48,11 +48,11 @@ def button(node_clicked: str):
 def content(node_clicked: str):
     if node_clicked == "node1":
         return """
-        <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn" hx-swap-oob="outerHTML:#node1-div">Clicked node1</div>
-        <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn" hx-swap-oob="outerHTML:#node2-div"></div>
+        <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn" hx-swap-oob="true">Clicked node1</div>
+        <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn" hx-swap-oob="true"></div>
         """
     else:
         return """
-        <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn" hx-swap-oob="outerHTML:#node1-div"></div>
-        <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn" hx-swap-oob="outerHTML:#node2-div">Clicked node2</div>
+        <div id="node1-div" hx-get="/content/node1" hx-trigger="click from:#node1-btn" hx-swap-oob="true"></div>
+        <div id="node2-div" hx-get="/content/node2" hx-trigger="click from:#node2-btn" hx-swap-oob="true">Clicked node2</div>
         """
