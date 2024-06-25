@@ -1,0 +1,12 @@
+name: sample_setup
+
+services:
+  service1:
+    build: .
+    container_name: service1_container
+    volumes:
+      - type: bind
+        source: ./tests
+        target: /tests
+    ports:
+      - "8000:8000"  
