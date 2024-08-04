@@ -22,7 +22,7 @@
             "console": "integratedTerminal",
             "module": "uvicorn",
             "args": [
-                "server:app",
+                "client:app",
                 "--reload",
                 "--host",
                 "192.168.100.2",
