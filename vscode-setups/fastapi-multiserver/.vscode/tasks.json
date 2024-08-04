@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Make Test Setup Executable",
+            "type": "shell",
+            "command": "chmod +x ${workspaceFolder}/setup.sh && chmod +x ${workspaceFolder}/cleanup.sh"
+        },
+        {
+            "label": "Test Setup",
+            "type": "shell",
+            "dependsOn": "Make Test Setup Executable",
+            "command": "${workspaceFolder}/setup.sh"
+        },
+        {
+            "label": "Test Cleanup",
+            "type": "shell",
+            "command": "${workspaceFolder}/cleanup.sh"
+        }
+    ]
+}
