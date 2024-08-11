@@ -22,7 +22,7 @@ async def read_root():
         <body>
             <h1>Root Service</h1>
             <div id="snippet"></div>
-            <button hx-get="htt-://192.168.100.2:8002/snippet" hx-target="#snippet" hx-swap="innerHTML" hx-trigger="click">Get Snippet</button>
+            <button hx-get="http://192.168.100.2:8002/snippet" hx-target="#snippet" hx-swap="innerHTML" hx-trigger="click">Get Snippet</button>
         </body>
     </html>
     """
