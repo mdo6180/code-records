@@ -15,9 +15,9 @@ async def read_root():
     return """
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>Root Service</title>
-        <script src="/static/js/htmx.js" type="text/javascript"></script>
+        <head>
+            <title>Root Service</title>
+            <script src="/static/js/htmx.js" type="text/javascript"></script>
         </head>
         <body>
             <h1>Root Service</h1>
