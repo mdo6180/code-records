@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
-import requests
 
 
 
@@ -20,13 +19,16 @@ def home():
             
             <!-- non-minified Htmx -->
             <script src="/static/js/htmx.js" type="text/javascript"></script>
+            <style>
+                html {{ scroll-behavior: smooth; }}
+            </style>
         </head>
         <body>
             <form>
                 <label for="row">Enter row number:</label>
                     <input type="number" name="row" placeholder="Type a row number">
                 </label>
-                <button type="submit" hx-post="/hx_post" hx-trigger="click" hx-target="#target_div" hx-swap="innerHTML">Jump to Row</button>
+                <button type="submit" hx-post="/hx_post" hx-trigger="click" hx-swap="none">Jump to Row</button>
                 <br>
             </form>
             <div id="target_div"></div>
@@ -48,7 +50,6 @@ def home():
                         ])
                 }
             </table>
-            <script src="/static/js/scrolling.js" type="text/javascript"></script>
         </body>
     </html>
     '''
@@ -56,12 +57,4 @@ def home():
 
 @app.post("/hx_post", response_class=HTMLResponse)
 async def post(response: Response, row: int = Form(...)):
-    print(row)
     response.headers["HX-Redirect"] = f"http://127.0.0.1:8000/#row{str(row)}"
-    return f"""
-    <div>
-        <div>
-            message received: {row}
-        </div>
-    </div>
-    """
