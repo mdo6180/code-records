@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 import requests
 
@@ -8,6 +8,8 @@ import requests
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="../../static"), name="static")
 
+
+newline = "\n"
 
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -35,7 +37,7 @@ def home():
                     <th>Row #</th>
                 </tr>
                 {
-                    "\n".join(
+                    newline.join(
                         [
                             f"""
                             <tr id="row{i}">
@@ -46,14 +48,16 @@ def home():
                         ])
                 }
             </table>
+            <script src="/static/js/scrolling.js" type="text/javascript"></script>
         </body>
     </html>
     '''
 
 
 @app.post("/hx_post", response_class=HTMLResponse)
-async def post(row: int = Form(...)):
+async def post(response: Response, row: int = Form(...)):
     print(row)
+    response.headers["HX-Redirect"] = f"http://127.0.0.1:8000/#row{str(row)}"
     return f"""
     <div>
         <div>
