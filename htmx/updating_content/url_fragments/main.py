@@ -19,6 +19,8 @@ def home():
             
             <!-- non-minified Htmx -->
             <script src="/static/js/htmx.js" type="text/javascript"></script>
+            
+            <!-- implement smooth scrolling -->
             <style>
                 html {{ scroll-behavior: smooth; }}
             </style>
@@ -31,7 +33,6 @@ def home():
                 <button type="submit" hx-post="/hx_post" hx-trigger="click" hx-swap="none">Jump to Row</button>
                 <br>
             </form>
-            <div id="target_div"></div>
             <!-- navigate to row 500 by typing this url into the browser: http://127.0.0.1:8000/#row500 -->
             <table>
                 <tr>
