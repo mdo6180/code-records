@@ -1,44 +1,14 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+import time
+import json
+
+
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="../static"), name="static")
 
-html = """
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Chat</title>
-    </head>
-    <body>
-        <h1>WebSocket Chat</h1>
-        <h2>Your ID: <span id="ws-id"></span></h2>
-        <form action="" onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button>Send</button>
-        </form>
-        <ul id='messages'>
-        </ul>
-        <script>
-            var client_id = Date.now()
-            document.querySelector("#ws-id").textContent = client_id;
-            var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
-            ws.onmessage = function(event) {
-                var messages = document.getElementById('messages')
-                var message = document.createElement('li')
-                var content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
-            };
-            function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
-                event.preventDefault()
-            }
-        </script>
-    </body>
-</html>
-"""
 
 
 class ConnectionManager:
@@ -63,9 +33,35 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def get():
-    return HTMLResponse(html)
+    client_id = int(time.time())
+
+    return f"""
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>Chat</title>
+
+            <!-- non-minified Htmx -->
+            <script src="/static/js/htmx.js" type="text/javascript"></script>
+
+            <!-- htmx websockets extension -->
+            <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+        </head>
+        <body>
+            <h1>WebSocket Chat</h1>
+            <h2>Your ID: {client_id}</h2>
+            <div hx-ext="ws" ws-connect="/ws/{client_id}">
+                <div id="chat_room"></div>
+                <form id="form" ws-send>
+                    <input name="chat_message">
+                    <button>Send</button>
+                </form>
+            </div>
+        </body>
+    </html>
+    """
 
 
 @app.websocket("/ws/{client_id}")
@@ -74,8 +70,32 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            data = json.loads(data)
+
+            await manager.send_personal_message(
+                f"""
+                <div id="chat_room" hx-swap-oob="beforeend">
+                    <div>You wrote: {data["chat_message"]}</div>
+                </div>
+                """, 
+                websocket
+            )
+
+            await manager.broadcast(
+                f"""
+                <div id="chat_room" hx-swap-oob="beforeend">
+                    <div>Client #{client_id} says: {data["chat_message"]}</div>
+                </div>
+                """
+            )
+
     except WebSocketDisconnect:
         manager.disconnect(websocket)
-        await manager.broadcast(f"Client #{client_id} left the chat")
+        await manager.broadcast(
+            f"""
+            <div id="chat_room" hx-swap-oob="beforeend">
+                <div>Client #{client_id} left the chat</div>
+            </div>
+            """
+        )
+        print(f"Client #{client_id} left the chat")
