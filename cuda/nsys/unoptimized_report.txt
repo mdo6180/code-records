@@ -1,0 +1,66 @@
+Success! All values calculated correctly.
+Generating '/tmp/nsys-report-cfcc.qdstrm'
+[1/8] [========================100%] report4.nsys-rep
+[2/8] [========================100%] report4.sqlite
+[3/8] Executing 'nvtx_sum' stats report
+SKIPPED: /dli/task/report4.sqlite does not contain NV Tools Extension (NVTX) data.
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  ----------------------
+     90.3       6184256533        321  19265596.7  10070313.0      2690  100159987   27514138.4  poll                  
+      8.8        601766622        286   2104079.1   2064789.0       140   20538603    1444337.7  sem_timedwait         
+      0.6         42837657        499     85847.0     11440.0       380    9736549     583806.9  ioctl                 
+      0.3         19025640         24    792735.0      4710.0       871    7135946    2137850.7  mmap                  
+      0.0           883514         27     32722.7      3580.0      3120     546789     103529.8  mmap64                
+      0.0           491890         44     11179.3     10540.0      3800      32641       5582.3  open64                
+      0.0           163083          4     40770.8     41471.0     31410      48731       8521.8  pthread_create        
+      0.0           139182         11     12652.9     12470.0      1080      19851       4920.6  write                 
+      0.0           131762         29      4543.5      3100.0       960      19090       4310.5  fopen                 
+      0.0            65652         12      5471.0      2970.0      1140      33371       8843.0  munmap                
+      0.0            51300         26      1973.1        70.0        60      49470       9687.5  fgets                 
+      0.0            34091          6      5681.8      5455.0      2520       8460       2262.7  open                  
+      0.0            32530         52       625.6       480.0       160       5140        695.7  fcntl                 
+      0.0            23031         22      1046.9       935.0       510       3100        572.9  fclose                
+      0.0            20210         14      1443.6      1220.0       800       3550        836.8  read                  
+      0.0            17091          2      8545.5      8545.5      5321      11770       4560.1  socket                
+      0.0            10711          1     10711.0     10711.0     10711      10711          0.0  connect               
+      0.0             6840          5      1368.0      1310.0        70       3190       1328.2  fread                 
+      0.0             6660          1      6660.0      6660.0      6660       6660          0.0  pipe2                 
+      0.0             5600         64        87.5        50.0        40        190         48.5  pthread_mutex_trylock 
+      0.0             1990          1      1990.0      1990.0      1990       1990          0.0  bind                  
+      0.0             1320          1      1320.0      1320.0      1320       1320          0.0  listen                
+      0.0              290          1       290.0       290.0       290        290          0.0  pthread_cond_broadcast
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls    Avg (ns)      Med (ns)     Min (ns)    Max (ns)   StdDev (ns)          Name         
+ --------  ---------------  ---------  ------------  ------------  ----------  ----------  -----------  ---------------------
+     94.7       2501986407          1  2501986407.0  2501986407.0  2501986407  2501986407          0.0  cudaDeviceSynchronize
+      4.6        121025846          3    40341948.7       36120.0       14350   120975376   69830597.3  cudaMallocManaged    
+      0.7         19078110          3     6359370.0     6042668.0     5839355     7196087     731714.1  cudaFree             
+      0.0            50691          1       50691.0       50691.0       50691       50691          0.0  cudaLaunchKernel     
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances    Avg (ns)      Med (ns)     Min (ns)    Max (ns)   StdDev (ns)                       Name                     
+ --------  ---------------  ---------  ------------  ------------  ----------  ----------  -----------  ----------------------------------------------
+    100.0       2501977376          1  2501977376.0  2501977376.0  2501977376  2501977376          0.0  addVectorsInto(float *, float *, float *, int)
+(note: kernel took 2.5 seconds to run)
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+
+ Time (%)  Total Time (ns)  Count  Avg (ns)  Med (ns)  Min (ns)  Max (ns)  StdDev (ns)              Operation            
+ --------  ---------------  -----  --------  --------  --------  --------  -----------  ---------------------------------
+     75.6         34128054   2304   14812.5    4272.0      1823     91840      22551.0  [CUDA Unified Memory memcpy HtoD]
+     24.4         11027059    768   14358.1    3775.5      1215     80576      22789.6  [CUDA Unified Memory memcpy DtoH]
+
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+
+ Total (MB)  Count  Avg (MB)  Med (MB)  Min (MB)  Max (MB)  StdDev (MB)              Operation            
+ ----------  -----  --------  --------  --------  --------  -----------  ---------------------------------
+    402.653   2304     0.175     0.033     0.004     1.044        0.301  [CUDA Unified Memory memcpy HtoD]
+    134.218    768     0.175     0.033     0.004     1.044        0.301  [CUDA Unified Memory memcpy DtoH]
+
+Generated:
+    /dli/task/report4.nsys-rep
+    /dli/task/report4.sqlite

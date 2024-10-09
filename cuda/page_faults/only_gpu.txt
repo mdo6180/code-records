@@ -1,0 +1,54 @@
+Generating '/tmp/nsys-report-5e7f.qdstrm'
+[1/8] [========================100%] report26.nsys-rep
+[2/8] [========================100%] report26.sqlite
+[3/8] Executing 'nvtx_sum' stats report
+SKIPPED: /dli/task/report26.sqlite does not contain NV Tools Extension (NVTX) data.
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  ----------------------
+     82.1        531903907         37  14375781.3  10071054.0      2470  100122445   22076184.1  poll                  
+     11.5         74423221         33   2255249.1   2065721.0       180   20500164    3887142.5  sem_timedwait         
+      5.3         34437604        482     71447.3     11855.0       530    9618827     469066.1  ioctl                 
+      0.7          4342836         18    241268.7      5555.0      1020    4218845     992710.3  mmap                  
+      0.2          1135109         27     42041.1      4330.0      3210     719801     136475.1  mmap64                
+      0.1           568218         44     12914.0     11285.5      3870      45990       7301.9  open64                
+      0.0           204802          4     51200.5     48675.5     34610      72841      17385.8  pthread_create        
+      0.0           181802         29      6269.0      4500.0      1480      44981       8141.6  fopen                 
+      0.0           146931         11     13357.4     14561.0       960      16850       4616.5  write                 
+      0.0            57361         26      2206.2        90.0        70      55161      10800.7  fgets                 
+      0.0            42570          6      7095.0      7195.0      3500      10350       2647.3  open                  
+      0.0            35231         52       677.5       530.0       150       5170        723.0  fcntl                 
+      0.0            31170          7      4452.9      4020.0      2430       8030       1896.2  munmap                
+      0.0            27441         22      1247.3      1165.0       650       3560        621.3  fclose                
+      0.0            21951         14      1567.9      1330.0       460       3960       1023.3  read                  
+      0.0            16230          2      8115.0      8115.0      4370      11860       5296.2  socket                
+      0.0            12641          1     12641.0     12641.0     12641      12641          0.0  connect               
+      0.0             6360         64        99.4       120.0        40        280         58.6  pthread_mutex_trylock 
+      0.0             6160          5      1232.0       910.0        80       2820       1239.3  fread                 
+      0.0             5990          1      5990.0      5990.0      5990       5990          0.0  pipe2                 
+      0.0             2341          1      2341.0      2341.0      2341       2341          0.0  bind                  
+      0.0             1310          1      1310.0      1310.0      1310       1310          0.0  listen                
+      0.0              330          1       330.0       330.0       330        330          0.0  pthread_cond_broadcast
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)        Name       
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  -----------------
+     67.7        240980544          1  240980544.0  240980544.0  240980544  240980544          0.0  cudaFree         
+     32.3        114887102          1  114887102.0  114887102.0  114887102  114887102          0.0  cudaMallocManaged
+      0.0            25690          1      25690.0      25690.0      25690      25690          0.0  cudaLaunchKernel 
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+
+ Time (%)  Total Time (ns)  Instances   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)            Name          
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  ------------------------
+    100.0        236698198          1  236698198.0  236698198.0  236698198  236698198          0.0  deviceKernel(int *, int)
+
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+SKIPPED: /dli/task/report26.sqlite does not contain GPU memory data.
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+SKIPPED: /dli/task/report26.sqlite does not contain GPU memory data.
+Generated:
+    /dli/task/report26.nsys-rep
+    /dli/task/report26.sqlite

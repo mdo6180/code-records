@@ -1,0 +1,50 @@
+Generating '/tmp/nsys-report-d9bb.qdstrm'
+[1/8] [========================100%] report25.nsys-rep
+[2/8] [========================100%] report25.sqlite
+[3/8] Executing 'nvtx_sum' stats report
+SKIPPED: /dli/task/report25.sqlite does not contain NV Tools Extension (NVTX) data.
+[4/8] Executing 'osrt_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)    Med (ns)   Min (ns)  Max (ns)   StdDev (ns)           Name         
+ --------  ---------------  ---------  ----------  ----------  --------  ---------  -----------  ----------------------
+     81.8        501937027         34  14762853.7  10086150.5      2161  100138681   22915798.9  poll                  
+     10.9         66673427         30   2222447.6   2074002.5       300   20472545    3931691.8  sem_timedwait         
+      6.3         38716281        482     80324.2     12005.0       400    8702219     492611.3  ioctl                 
+      0.6          3831690         18    212871.7      4850.0      1100    3714909     874025.4  mmap                  
+      0.1           885327         27     32789.9      3810.0      3020     549719     104082.3  mmap64                
+      0.1           530019         44     12045.9     10815.0      3140      49031       7167.4  open64                
+      0.0           200354          4     50088.5     45686.0     35581      73401      17178.7  pthread_create        
+      0.0           188754         29      6508.8      4040.0      1490      36681       7979.9  fopen                 
+      0.0           157991         11     14362.8     14430.0      1000      23800       5814.4  write                 
+      0.0            51181         26      1968.5        70.0        60      49401       9674.4  fgets                 
+      0.0            43270          7      6181.4      4250.0      2330      18990       5846.2  munmap                
+      0.0            41210          6      6868.3      7875.0      3110      10180       2822.6  open                  
+      0.0            37481         52       720.8       460.0       150       7360       1032.4  fcntl                 
+      0.0            30771         22      1398.7      1065.0       620       4491        892.3  fclose                
+      0.0            22690         14      1620.7      1330.0       580       4130       1053.5  read                  
+      0.0            19850          5      3970.0      1500.0        80      12540       5280.6  fread                 
+      0.0            19410          2      9705.0      9705.0      5110      14300       6498.3  socket                
+      0.0            11390          1     11390.0     11390.0     11390      11390          0.0  connect               
+      0.0             8000          1      8000.0      8000.0      8000       8000          0.0  pipe2                 
+      0.0             5380         64        84.1        50.0        40        450         64.9  pthread_mutex_trylock 
+      0.0             2700          1      2700.0      2700.0      2700       2700          0.0  bind                  
+      0.0             1140          1      1140.0      1140.0      1140       1140          0.0  listen                
+      0.0             1070          1      1070.0      1070.0      1070       1070          0.0  pthread_mutex_lock    
+      0.0              250          1       250.0       250.0       250        250          0.0  pthread_cond_broadcast
+
+[5/8] Executing 'cuda_api_sum' stats report
+
+ Time (%)  Total Time (ns)  Num Calls   Avg (ns)     Med (ns)    Min (ns)   Max (ns)   StdDev (ns)        Name       
+ --------  ---------------  ---------  -----------  -----------  ---------  ---------  -----------  -----------------
+     96.9        117998215          1  117998215.0  117998215.0  117998215  117998215          0.0  cudaMallocManaged
+      3.1          3837471          1    3837471.0    3837471.0    3837471    3837471          0.0  cudaFree         
+
+[6/8] Executing 'cuda_gpu_kern_sum' stats report
+SKIPPED: /dli/task/report25.sqlite does not contain CUDA kernel data.
+[7/8] Executing 'cuda_gpu_mem_time_sum' stats report
+SKIPPED: /dli/task/report25.sqlite does not contain GPU memory data.
+[8/8] Executing 'cuda_gpu_mem_size_sum' stats report
+SKIPPED: /dli/task/report25.sqlite does not contain GPU memory data.
+Generated:
+    /dli/task/report25.nsys-rep
+    /dli/task/report25.sqlite
