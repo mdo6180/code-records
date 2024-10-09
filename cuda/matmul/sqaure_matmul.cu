@@ -49,15 +49,17 @@ __global__ void matrixMulGPU( int * a, int * b, int * c ) {
  */
 
 void matrixMulCPU( int * a, int * b, int * c ) {
-  int val = 0;
+    int val = 0;
 
-  for( int row = 0; row < N; ++row )
-    for( int col = 0; col < N; ++col )
-    {
-      val = 0;
-      for ( int k = 0; k < N; ++k )
-        val += a[row * N + k] * b[k * N + col];
-      c[row * N + col] = val;
+    for( int row = 0; row < N; ++row ) {
+        for( int col = 0; col < N; ++col ) {
+            val = 0;
+            for ( int k = 0; k < N; ++k ) {
+
+                val += a[row * N + k] * b[k * N + col];
+            }
+            c[row * N + col] = val;
+        }
     }
 }
 
