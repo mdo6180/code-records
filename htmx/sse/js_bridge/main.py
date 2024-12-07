@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi import Request
 import asyncio
+import json
 
 
 app = FastAPI()
@@ -47,9 +48,15 @@ async def event_stream(request: Request):
                     text_color = "red"
                 else:
                     text_color = "blue"
+                
+                data = {
+                    "color": text_color,
+                    "source": "source1",
+                    "target": "target1"
+                }
                     
                 yield "event: ChangeColor\n" 
-                yield f"data: {text_color}\n\n"
+                yield f"data: {json.dumps(data)}\n\n"
             
             except asyncio.CancelledError:
                 yield "event: close\n"
