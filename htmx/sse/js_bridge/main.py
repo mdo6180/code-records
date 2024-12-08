@@ -14,7 +14,9 @@ app.mount("/app", StaticFiles(directory="static"), name="app")
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    return """<html>
+    return """
+    <!DOCTYPE html>
+    <html>
         <head>
             <meta charset="UTF-8">
             <title>Anacostia Console</title>
