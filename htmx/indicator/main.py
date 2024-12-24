@@ -8,6 +8,7 @@ newline = "\n"
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="../static"), name="static")
 app.mount("/img", StaticFiles(directory="./img"), name="img")
+app.mount("/css", StaticFiles(directory="./css"), name="css")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -22,7 +23,7 @@ async def home():
             <!-- non-minified Htmx -->
             <script src="/static/js/htmx.js" type="text/javascript"></script>
 
-            <!-- Add more dependencies here -->
+            <link rel="stylesheet" href="/css/styles.css">
 	</head>
         <body>
             <div>
