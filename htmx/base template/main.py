@@ -21,7 +21,7 @@ async def home():
             <script src="/static/js/htmx.js" type="text/javascript"></script>
 
             <!-- Add more dependencies here -->
-	</head>
+        </head>
         <body>
         </body>
     </html>
