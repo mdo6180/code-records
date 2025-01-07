@@ -1,12 +1,26 @@
-.htmx-indicator{
+.htmx-indicator {
     opacity:0;
     transition: opacity 500ms ease-in;
 }
 
-.htmx-request .htmx-indicator{
+.htmx-request .htmx-indicator {
     opacity:1;
 }
 
-.htmx-request.htmx-indicator{
-    opacity:1;
+.htmx-request.htmx-indicator {
+    display:inline;
+}
+
+#spinner_div {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+#spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

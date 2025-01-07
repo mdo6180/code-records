@@ -24,13 +24,17 @@ async def home():
             <script src="/static/js/htmx.js" type="text/javascript"></script>
 
             <link rel="stylesheet" href="/css/styles.css">
-	</head>
+        </head>
         <body>
-            <div>
+            <div id="spinner_div">
+
+                <!-- button can be placed anywhere, we are simply placing the button here as a placeholder -->
                 <button hx-post="/example" hx-indicator="#spinner" hx-target="this" hx-swap="outerHTML" hx-trigger="click">
                     Post It!
                 </button>
-                <img  id="spinner" class="htmx-indicator" src="/img/spinner2.gif"/>
+
+                <!-- the spinner is put directly in the middle of the screen via position: absolute in css -->
+                <img id="spinner" class="htmx-indicator" src="/img/spinner2.gif"/>
             </div>
         </body>
     </html>
