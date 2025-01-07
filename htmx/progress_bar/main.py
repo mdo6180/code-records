@@ -21,7 +21,7 @@ async def home():
     <html>
         <head>
             <meta charset="UTF-8">
-            <title>HTMX Indicator</title>
+            <title>HTMX Progress Bar</title>
 
             <!-- non-minified Htmx -->
             <script src="/static/js/htmx.js" type="text/javascript"></script>
@@ -56,6 +56,7 @@ async def start():
             hx-target="this" 
             hx-swap="innerHTML">
 
+            <div>Progress: {percentage}%</div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{percentage}" aria-labelledby="pblabel">
                 <div id="pb" class="progress-bar" style="width:{percentage}%">
             </div>
@@ -76,6 +77,7 @@ async def job():
             hx-target="this" 
             hx-swap="innerHTML">
 
+            <div>Progress: {percentage}%</div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{percentage}" aria-labelledby="pblabel">
                 <div id="pb" class="progress-bar" style="width:{percentage}%"></div>
             </div>
@@ -91,11 +93,13 @@ async def job():
 async def job_progress(response: Response):
     global percentage
     if percentage >= 100:
+        percentage = 100
         response.headers["HX-Trigger"] = "done"
     else:
         percentage += random.randint(0, 20)
 
     return f"""
+    <div>Progress: {percentage}%</div>
     <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{percentage}" aria-labelledby="pblabel">
         <div id="pb" class="progress-bar" style="width:{percentage}%"></div>
     </div> 
