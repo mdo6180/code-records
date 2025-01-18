@@ -36,7 +36,11 @@ async def home():
         <head hx-head="merge">
             <meta hx-preserve="true" charset="UTF-8">
             <title hx-preserve="true">HTMX Indicator</title>
+
+            <!-- htmx -->
             <script hx-preserve="true" src="/static/js/htmx.js" type="text/javascript"></script>
+
+            <!-- htmx head support -->
             <script hx-preserve="true" src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js"></script>
             <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
         </head>
@@ -55,7 +59,11 @@ async def no_styling():
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
+
+        <!-- htmx -->
         <script hx-preserve="true" src="/static/js/htmx.js" type="text/javascript"></script>
+
+        <!-- htmx head support -->
         <script hx-preserve="true" src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js"></script>
         <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
     </head> 
@@ -68,7 +76,11 @@ async def home1():
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
+
+        <!-- htmx -->
         <script hx-preserve="true" src="/static/js/htmx.js" type="text/javascript"></script>
+
+        <!-- htmx head support -->
         <script hx-preserve="true" src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js"></script>
         <link rel="stylesheet" href="/css/button_style1.css">
         <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
@@ -83,7 +95,11 @@ async def home2():
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
+
+        <!-- htmx -->
         <script hx-preserve="true" src="/static/js/htmx.js" type="text/javascript"></script>
+
+        <!-- htmx head support -->
         <script hx-preserve="true" src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js"></script>
         <link rel="stylesheet" href="/css/button_style2.css">
         <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
