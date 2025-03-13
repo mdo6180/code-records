@@ -28,7 +28,7 @@ async def notification(type: str):
         return ""
 
     return f"""
-    <div class="notification {type}" hx-get="/notification/delete" hx-trigger="load delay:10s" hx-target="this" hx-swap="delete">
+    <div class="notification {type}" hx-get="/notification/delete" hx-trigger="load delay:4s" hx-target="this" hx-swap="delete">
         <div class="notification-content">
             <div class="notification-title">{title}</div>
             <div class="notification-message">{message}</div>
