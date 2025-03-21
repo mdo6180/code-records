@@ -6,8 +6,9 @@ document.body.addEventListener('htmx:sseOpen', (event) => {
 
 document.body.addEventListener('htmx:sseBeforeMessage', (event) => {
     const elt = event.detail.elt;   // this is the element that has the sse-connect attribute
+    const event_name = event.detail.type;
     
-    if (event.detail.type === "ChangeColor") {
+    if (event_name === "ChangeColor") {
         event.preventDefault();     // call preventDefault() on the event to prevent the sse-swap from swapping in the data
 
         const data = JSON.parse(event.detail.data);
