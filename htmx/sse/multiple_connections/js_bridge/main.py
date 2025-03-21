@@ -66,9 +66,7 @@ async def event_stream(request: Request):
                 else:
                     text_color = "blue"
                 
-                data = {
-                    "color": text_color
-                }
+                data = { "color": text_color }
                     
                 # ChangeColor event is used for js bridge
                 yield "event: ChangeColor\n" 

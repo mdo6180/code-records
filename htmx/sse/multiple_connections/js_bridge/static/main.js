@@ -1,11 +1,11 @@
 document.body.addEventListener('htmx:sseOpen', (event) => {
-    const source = event.detail.source;
+    const source = event.detail.source;     // this is the EventSource object
     console.log(source);
 });
 
 
 document.body.addEventListener('htmx:sseBeforeMessage', (event) => {
-    const elt = event.detail.elt;   // this is the element that has the sse-connect attribute
+    const element = event.detail.elt;   // this is the element that has the sse-connect attribute
     const event_name = event.detail.type;
     
     if (event_name === "ChangeColor") {
@@ -14,7 +14,7 @@ document.body.addEventListener('htmx:sseBeforeMessage', (event) => {
         const data = JSON.parse(event.detail.data);
         console.log(data);
 
-        const element = document.getElementById("title");
-        element.style.color = data.color;
+        const title = document.getElementById("title");
+        title.style.color = data.color;
     }
 });
