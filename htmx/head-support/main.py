@@ -1,5 +1,5 @@
 """
-Note: merge algorithm is as follows:
+Note: merge algorithm works as follows:
 - Elements that exist in the current head as exact textual matches will be left in place
 - Elements that do not exist in the current head will be added at the end of the head tag
 - Elements that exist in the current head, but not in the new head will be removed from the head
@@ -11,6 +11,10 @@ This can be useful to execute a script on every htmx request. This can also be u
 In this demo, the main.css file is re-evaluated on every request in order to keep main.css at the bottom of the head tag.
 
 Note: The hx-preserve="true" attribute is used to prevent the element from being removed from the head tag during the merge algorithm.
+This can be useful for ensuring certain elements are placed at the top of the head tag. 
+
+Usage recommendations: put hx-preserve="true" on tags that need to be placed BEFORE the tags that needs to be swapped in, 
+put x-head="re-eval" on tags that need to be place AFTER the tags that needs to be swapped in.
 
 Note: when running this demo, open the browser console to see how the head tag changes.
 
@@ -26,6 +30,25 @@ newline = "\n"
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="../static"), name="static")
 app.mount("/css", StaticFiles(directory="./css"), name="css")
+
+
+def head(user_tags: str = ""):
+    return f"""
+    <head hx-head="merge">
+        <meta hx-preserve="true" charset="UTF-8">
+        <title hx-preserve="true">HTMX Indicator</title>
+
+        <!-- htmx -->
+        <script hx-preserve="true" src="/static/js/htmx.js" type="text/javascript"></script>
+
+        <!-- htmx head support -->
+        <script hx-preserve="true" src="https://unpkg.com/htmx-ext-head-support@2.0.1/head-support.js"></script>
+
+        {user_tags}
+
+        <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
+    </head> 
+    """
 
 
 @app.get("/", response_class=HTMLResponse)
