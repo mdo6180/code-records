@@ -66,8 +66,8 @@ async def download_file(filepath: str):
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
 
-@app.post("/receive-file-stream")
-async def receive_file_stream(
+@app.post("/upload_stream")
+async def upload_stream(
     request: Request,
     x_filename: Optional[str] = Header(None)
 ):

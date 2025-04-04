@@ -6,7 +6,7 @@ import sys
 import os
 
 # Configuration for the receiving server
-RECEIVING_SERVER_URL = "http://localhost:8000/receive-file-stream"
+RECEIVING_SERVER_URL = "http://localhost:8000/upload_stream"
 ROOT_DIR = "files"          # Directory to store files
 
 # Size of chunks to read and send (4MB)
