@@ -13,6 +13,10 @@ if os.path.exists(STORAGE_DIR) is False:
 else:
     if os.path.exists(f"./{STORAGE_DIR}sample_file.txt"):
         os.unlink(f"./{STORAGE_DIR}sample_file.txt")
+    
+    if os.path.exists(f"./{STORAGE_DIR}dir1/dir1.txt"):
+        os.unlink(f"./{STORAGE_DIR}dir1/dir1.txt")
+    
 
 
 app = FastAPI()
@@ -22,6 +26,10 @@ app = FastAPI()
 async def receive_file(file: UploadFile):
     print(f"Received file: {file.filename}")
     try:
+        folder_path = os.path.join(STORAGE_DIR, os.path.dirname(file.filename))
+        if os.path.exists(folder_path) is False:
+            os.makedirs(folder_path)
+
         # Save the received file
         file_path = os.path.join(STORAGE_DIR, file.filename)
         with open(file_path, "wb") as buffer:

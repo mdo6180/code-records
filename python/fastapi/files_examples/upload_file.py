@@ -2,21 +2,27 @@
 import httpx
 import asyncio
 from pathlib import Path
-import sys
+import os
 
+
+root_dir = "files"
 
 # Function to send a file to the receiving server
-async def upload_file(file_path):
-    file_path = Path(file_path)
-    
+async def upload_file(file_path: str):
+
+    file_path = str(Path(file_path).absolute())     # /Users/minhquando/Desktop/code-records/python/fastapi/files_examples/files/dir1/dir1.txt
+    folder_path = str(Path(root_dir).absolute())    # /Users/minhquando/Desktop/code-records/python/fastapi/files_examples/files
+
     # Check if file exists
-    if not file_path.exists():
+    if os.path.exists(file_path) is False:
         print(f"Error: File not found - {file_path}")
         return
     
+    filename = file_path.removeprefix(folder_path)  # /dir1/dir1.txt
+    filename = file_path.lstrip("/")                # dir1/dir1.txt
+    
     try:
         # Get the filename from the path
-        filename = file_path.name
         print(f"Sending file: {filename}")
         
         # Send the file to the receiving server
@@ -29,7 +35,8 @@ async def upload_file(file_path):
     except Exception as e:
         print(f"Error: An exception occurred while sending the file: {str(e)}")
 
+
 # Run the function if script is executed directly
 if __name__ == "__main__":
-    file_path = "./files/sample_file.txt"  # Replace with the path to your file
+    file_path = "./files/dir1/dir1.txt"  # Replace with the path to your file
     asyncio.run(upload_file(file_path))
