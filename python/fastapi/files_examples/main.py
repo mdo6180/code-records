@@ -1,9 +1,11 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, HTTPException, Request, Header
 from fastapi.responses import FileResponse, JSONResponse
 import shutil
 import os
 from pathlib import Path
 import httpx
+from typing import Optional
+import asyncio
 
 
 # Directory to store received files
@@ -62,3 +64,52 @@ async def download_file(filepath: str):
         
     except HTTPException as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+
+@app.post("/receive-file-stream")
+async def receive_file_stream(
+    request: Request,
+    x_filename: Optional[str] = Header(None)
+):
+    try:
+        # Use the provided filename or generate one
+        if not x_filename:
+            x_filename = f"uploaded_file_{asyncio.get_event_loop().time()}"
+        
+        # Create the file path
+        file_path = os.path.join(STORAGE_DIR, x_filename)
+        
+        # Stream the request body directly to a file
+        content_length = request.headers.get("content-length")
+        if content_length:
+            total_size = int(content_length)
+            bytes_received = 0
+        else:
+            total_size = None
+            bytes_received = 0
+        
+    # Open the file and write chunks as they arrive
+        with open(file_path, "wb") as f:
+            async for chunk in request.stream():
+                f.write(chunk)
+                bytes_received += len(chunk)
+                # Optional: Add progress logging here
+                if total_size:
+                    progress = bytes_received / total_size * 100
+                    print(f"Received: {bytes_received/1024/1024:.2f}MB / {total_size/1024/1024:.2f}MB ({progress:.1f}%)")
+        
+        return JSONResponse(
+            content={
+                "filename": x_filename,
+                "status": "File received and saved successfully",
+                "bytes_received": bytes_received,
+                "stored_path": str(file_path)
+            },
+            status_code=200
+        )
+    
+    except Exception as e:
+        return JSONResponse(
+            content={"error": f"An error occurred while receiving: {str(e)}"},
+            status_code=500
+        )

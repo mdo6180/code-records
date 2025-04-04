@@ -19,7 +19,7 @@ async def upload_file(file_path: str):
         return
     
     filename = file_path.removeprefix(folder_path)  # /dir1/dir1.txt
-    filename = file_path.lstrip("/")                # dir1/dir1.txt
+    filename = filename.lstrip("/")                # dir1/dir1.txt
     
     try:
         # Get the filename from the path
