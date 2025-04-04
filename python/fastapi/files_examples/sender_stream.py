@@ -56,6 +56,8 @@ async def send_file_streaming(file_path):
         # Print the response
         if response.status_code == 200:
             print(f"Success: File {filename} sent successfully")
+            response_data = response.json()
+            print(f"remote storage path: {response_data['stored_path']}")
             return True
         else:
             print(f"Error: Received status code {response.status_code}")
