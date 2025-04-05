@@ -30,7 +30,8 @@ async def upload_file(file_path: str):
             with open(file_path, "rb") as f:
                 files = {"file": (filename, f)}
                 response = await client.post("http://localhost:8000/upload-file", files=files)
-                print(response.status_code)
+                response_data = response.json()
+                print(f"file saved at: {response_data['stored_path']}")
             
     except Exception as e:
         print(f"Error: An exception occurred while sending the file: {str(e)}")

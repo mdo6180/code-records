@@ -2,7 +2,6 @@
 import httpx
 import asyncio
 from pathlib import Path
-import sys
 import os
 
 # Configuration for the receiving server

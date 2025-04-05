@@ -1,9 +1,8 @@
 from fastapi import FastAPI, UploadFile, HTTPException, Request, Header
 from fastapi.responses import FileResponse, JSONResponse
 import shutil
+import pathlib
 import os
-from pathlib import Path
-import httpx
 from typing import Optional
 import asyncio
 
@@ -37,7 +36,14 @@ async def receive_file(file: UploadFile):
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
         
-        print(f"File saved to: {file_path}")
+        return JSONResponse(
+            content={
+                "filename": file.filename,
+                "status": "File received and saved successfully",
+                "stored_path": str(file_path)
+            },
+            status_code=200
+        )
     
     except Exception as e:
         print(f"An error occurred while receiving: {str(e)}")
@@ -67,15 +73,13 @@ async def download_file(filepath: str):
 
 
 @app.post("/upload_stream")
-async def upload_stream(
-    request: Request,
-    x_filename: Optional[str] = Header(None)
-):
+async def upload_stream(request: Request, x_filename: Optional[str] = Header(None)):
     try:
-        # Use the provided filename or generate one
-        if not x_filename:
-            x_filename = f"uploaded_file_{asyncio.get_event_loop().time()}"
-        
+        print(f"Received stream with filename: {x_filename}")
+        folder_path = os.path.join(STORAGE_DIR, os.path.dirname(x_filename))
+        if os.path.exists(folder_path) is False:
+            os.makedirs(folder_path)
+
         # Create the file path
         file_path = os.path.join(STORAGE_DIR, x_filename)
         
