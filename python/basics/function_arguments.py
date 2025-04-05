@@ -19,7 +19,11 @@ class ArtifactStore:
             print(f"Directory {self.root_dir} created.")
         else:
             print(f"Directory {self.root_dir} already exists.")
-
+    
+    def example_method(self, filepath: str, content: str):
+        print(f"Root directory: {self.root_dir}")
+        with open(filepath, "w") as f:
+            f.write(content)
 
     def save_artifact(self, func: Callable, filepath: str, *args, **kwargs):
         """
@@ -45,14 +49,10 @@ class ArtifactStore:
 
 
 
-# example 1: save a file with a function using args
-def example_func(filepath: str, content: str):
-    with open(filepath, "w") as f:
-        f.write(content)
-    
+# example 1: save a file with a method inside the class using args
 artifact_store = ArtifactStore(root_dir="artifacts")
 artifact_store.save_artifact(
-    example_func,
+    artifact_store.example_method,
     "example_dir/example_file.txt",
     "This is an example content."
 )
