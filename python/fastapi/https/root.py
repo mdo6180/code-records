@@ -1,0 +1,72 @@
+import signal
+import sys
+
+import uvicorn
+import asyncio
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+
+# command to run to generate self-signed cert and key
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private_root.key -out certificate_root.pem -config openssl.cnf
+
+
+host = "127.0.0.1"
+port = 8000
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        yield
+    except asyncio.CancelledError:
+        # Swallow it or log cleanly
+        print("Lifespan cancelled during shutdown.")
+
+app = FastAPI(lifespan=lifespan)
+
+
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root():
+    return """
+    <html>
+        <head>
+            <title>FastAPI HTTPS Example</title>
+        </head>
+        <body>
+            <h1>FastAPI HTTPS Example</h1>
+            <p>This is a simple root FastAPI application running with HTTPS.</p>
+        </body>
+    </html>
+    """
+
+config = uvicorn.Config(
+    app=app, 
+    host=host, 
+    port=port, 
+    ssl_keyfile="private_root.key", 
+    ssl_certfile="certificate_root.pem"
+)
+server = uvicorn.Server(config)
+
+if __name__ == "__main__":
+    """
+    # Store original signal handlers
+    original_sigint_handler = signal.getsignal(signal.SIGINT)
+
+    def _kill_webserver(sig, frame):
+        print(f"\nCTRL+C Caught!; Killing root Webservice...")
+        server.should_exit = True
+        print(f"Anacostia Webservice root Killed...")
+
+        # register the original default kill handler once the pipeline is killed
+        signal.signal(signal.SIGINT, original_sigint_handler)
+        sys.exit(0)
+    
+    # register the kill handler for the webserver
+    signal.signal(signal.SIGINT, _kill_webserver)
+    """
+
+    server.run()
