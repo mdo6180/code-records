@@ -46,27 +46,10 @@ config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-    ssl_keyfile="private_root.key", 
-    ssl_certfile="certificate_root.pem"
+    ssl_keyfile="../private_root.key", 
+    ssl_certfile="../certificate_root.pem"
 )
 server = uvicorn.Server(config)
 
 if __name__ == "__main__":
-    """
-    # Store original signal handlers
-    original_sigint_handler = signal.getsignal(signal.SIGINT)
-
-    def _kill_webserver(sig, frame):
-        print(f"\nCTRL+C Caught!; Killing root Webservice...")
-        server.should_exit = True
-        print(f"Anacostia Webservice root Killed...")
-
-        # register the original default kill handler once the pipeline is killed
-        signal.signal(signal.SIGINT, original_sigint_handler)
-        sys.exit(0)
-    
-    # register the kill handler for the webserver
-    signal.signal(signal.SIGINT, _kill_webserver)
-    """
-
     server.run()
