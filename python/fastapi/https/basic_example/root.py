@@ -1,16 +1,9 @@
-import signal
-import sys
-
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 
-# command to run to generate self-signed cert and key
-# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private_root.key -out certificate_root.pem -config openssl.cnf
 
 
 host = "127.0.0.1"
@@ -34,10 +27,13 @@ async def read_root():
     <html>
         <head>
             <title>FastAPI HTTPS Example</title>
+            <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+            <!-- this meta tag is used to configure htmx to allow for requests from a different origin, this is only because we're using htmx version 2 -->
+            <meta name="htmx-config" content='{"selfRequestsOnly": false}' />
         </head>
         <body>
-            <h1>FastAPI HTTPS Example</h1>
-            <p>This is a simple root FastAPI application running with HTTPS.</p>
+            <h1 id="header">Hello from the Root FastAPI Application!</h1>
+            <button hx-get="https://localhost:8001" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
         </body>
     </html>
     """

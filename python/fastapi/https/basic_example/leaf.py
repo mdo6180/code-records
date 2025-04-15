@@ -1,6 +1,3 @@
-# command to run to generate self-signed cert and key
-# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private_leaf.key -out certificate_leaf.pem -config openssl.cnf
-
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
@@ -23,21 +20,24 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+origins = [
+    "https://127.0.0.1:8000", 
+    "https://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 
 @app.get("/", response_class=HTMLResponse)
-async def read_root():
-    return """
-    <html>
-        <head>
-            <title>FastAPI HTTPS Example</title>
-        </head>
-        <body>
-            <h1>FastAPI HTTPS Example</h1>
-            <p>This is a simple leaf FastAPI application running with HTTPS.</p>
-        </body>
-    </html>
-    """
+async def read_leaf():
+    return "<h1>Hello from leaf</h1>"
 
 config = uvicorn.Config(
     app=app, 
