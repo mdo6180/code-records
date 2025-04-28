@@ -17,24 +17,6 @@ notification_queue = Queue()
 async def notification_delete():
     return ""
 
-def send_notification(type: str, title: str, message: str):
-    global notification_queue
-
-    if type not in ["success", "warning", "error", "info"]:
-        raise ValueError(f"type '{type}' is not a valid type for a notification")
-
-    notification_snippet = f"""
-    <div class="notification {type}" hx-get="/notification_delete" hx-trigger="load delay:4s" hx-target="this" hx-swap="delete">
-        <div class="notification-content">
-            <div class="notification-title">{title}</div>
-            <div class="notification-message">{message}</div>
-        </div>
-        <button class="close-button" hx-get="/notification_delete" hx-trigger="click" hx-target="closest .notification" hx-swap="delete">✕</button>
-    </div>
-    """
-
-    notification_queue.put_nowait(notification_snippet)
-
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
@@ -63,6 +45,7 @@ async def home():
         </head>
         <body hx-ext="head-support, sse">
             <div class="notification-container" id="notification-container" sse-connect="/notification_events" sse-swap="NotificationEvent" hx-swap="afterbegin"></div>
+            <button hx-get="/send_notification" hx-trigger="click" hx-target="this" hx-swap="none">Send Notification</button>
         </body>
     </html> 
     """
@@ -76,11 +59,34 @@ def format_html_for_sse(html_content: str) -> str:
 
     return formatted_content
 
+
+def send_notification(type: str, title: str, message: str):
+    global notification_queue
+
+    if type not in ["success", "warning", "error", "info"]:
+        raise ValueError(f"type '{type}' is not a valid type for a notification")
+
+    notification_snippet = f"""
+    <div class="notification {type}" hx-get="/notification_delete" hx-trigger="load delay:4s" hx-target="this" hx-swap="delete">
+        <div class="notification-content">
+            <div class="notification-title">{title}</div>
+            <div class="notification-message">{message}</div>
+        </div>
+        <button class="close-button" hx-get="/notification_delete" hx-trigger="click" hx-target="closest .notification" hx-swap="delete">✕</button>
+    </div>
+    """
+
+    notification_queue.put_nowait(notification_snippet)
+
+
+@app.get("/send_notification")
+async def notify():
+    send_notification("success", title="Success", message="Successful!")
+
+
 @app.get("/notification_events")
 async def notification_events(request: Request):
     global notification_queue
-    for _ in range(20):
-        send_notification("success", title="Success", message="Successful!")
 
     async def event_stream():
         while await request.is_disconnected() is False:
