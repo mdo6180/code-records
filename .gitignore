@@ -13,3 +13,4 @@ main
 .DS_Store
 *.key
 *.pem
+logs/
