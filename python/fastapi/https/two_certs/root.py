@@ -3,10 +3,11 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+import httpx
 
 
 
-host = "127.0.0.1"
+host = "localhost"
 port = 8000
 
 @asynccontextmanager
@@ -33,17 +34,27 @@ async def read_root():
         </head>
         <body>
             <h1 id="header">Hello from the Root FastAPI Application!</h1>
-            <button hx-get="https://localhost:8001" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
+            <div id=data_div></div>
+            <button hx-get="https://localhost:8001/" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
+            <button hx-get="https://localhost:8000/get_data" hx-trigger="click" hx-target="#data_div" hx-swap="innerHTML">Click to get data from leaf</button>
         </body>
     </html>
     """
+
+
+@app.get("/get_data", response_class=HTMLResponse)
+async def get_data():
+    async with httpx.AsyncClient(verify="../certificate_leaf.pem") as client:
+        response = await client.get("https://localhost:8001/library_data")
+        response = response.json()
+        return f"<div>{response['phrase']}</div>"
 
 config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-    ssl_keyfile="../private_root.key", 
-    ssl_certfile="../certificate_root.pem"
+    ssl_keyfile="private_root.key", 
+    ssl_certfile="certificate_root.pem"
 )
 server = uvicorn.Server(config)
 

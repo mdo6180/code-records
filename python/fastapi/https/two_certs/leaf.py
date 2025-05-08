@@ -34,17 +34,22 @@ app.add_middleware(
 )
 
 
-
+# Note: visit 
 @app.get("/", response_class=HTMLResponse)
 async def read_leaf():
     return "<h1>Hello from leaf</h1>"
+
+
+@app.get("/library_data")
+async def library_data():
+    return {"phrase": "hello world"}
 
 config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-    ssl_keyfile="../private_leaf.key", 
-    ssl_certfile="../certificate_leaf.pem"
+    ssl_keyfile="private_leaf.key", 
+    ssl_certfile="certificate_leaf.pem"
 )
 server = uvicorn.Server(config)
 
