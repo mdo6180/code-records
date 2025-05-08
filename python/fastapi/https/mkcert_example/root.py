@@ -1,3 +1,5 @@
+from pathlib import Path
+import os
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
@@ -44,7 +46,12 @@ async def read_root():
 
 @app.get("/get_data", response_class=HTMLResponse)
 async def get_data():
-    async with httpx.AsyncClient(verify="certificate_leaf.pem") as client:
+    # Dynamically find mkcert's local CA
+    mkcert_ca = Path(os.popen("mkcert -CAROOT").read().strip()) / "rootCA.pem"
+    mkcert_ca = str(mkcert_ca)
+    print(mkcert_ca)
+
+    async with httpx.AsyncClient(verify=mkcert_ca) as client:
         response = await client.get("https://localhost:8001/library_data")
         response = response.json()
         return f"<div>{response['phrase']}</div>"
