@@ -5,6 +5,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 import httpx
 
 
@@ -21,6 +22,14 @@ async def lifespan(app: FastAPI):
         print("Lifespan cancelled during shutdown.")
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://localhost:8000", "https://127.0.0.1:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Dynamically find mkcert's local CA
@@ -66,4 +75,8 @@ config = uvicorn.Config(
 server = uvicorn.Server(config)
 
 if __name__ == "__main__":
-    server.run()
+    try:
+        server.run()
+    except KeyboardInterrupt:
+        server.should_exit = True
+        print("Server stopped.")

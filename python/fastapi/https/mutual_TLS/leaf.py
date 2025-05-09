@@ -62,4 +62,8 @@ config = uvicorn.Config(
 server = uvicorn.Server(config)
 
 if __name__ == "__main__":
-    server.run()
+    try:
+        server.run()
+    except KeyboardInterrupt:
+        server.should_exit = True
+        print("Server stopped.")
