@@ -48,13 +48,8 @@ config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-<<<<<<< HEAD:python/fastapi/https/basic_example/leaf.py
-    ssl_keyfile="../private_root.key", 
-    ssl_certfile="../certificate_root.pem"
-=======
     ssl_keyfile="private_leaf.key", 
     ssl_certfile="certificate_leaf.pem"
->>>>>>> 6eae4d54eb937ed47ba3715f97b05fef9eb2cffc:python/fastapi/https/two_certs/leaf.py
 )
 server = uvicorn.Server(config)
 
