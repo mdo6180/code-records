@@ -1,3 +1,5 @@
+from pathlib import Path
+import os
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
@@ -9,6 +11,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 host = "localhost"
 port = 8001
+
+# Dynamically find mkcert's local CA
+mkcert_ca = Path(os.popen("mkcert -CAROOT").read().strip()) / "rootCA.pem"
+mkcert_ca = str(mkcert_ca)
+print(mkcert_ca)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,23 +41,25 @@ app.add_middleware(
 )
 
 
-
+# Note: visit 
 @app.get("/", response_class=HTMLResponse)
 async def read_leaf():
     return "<h1>Hello from leaf</h1>"
+
+
+@app.get("/library_data")
+async def library_data():
+    return {"phrase": "hello world"}
 
 config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-    ssl_keyfile="../private_root.key", 
-    ssl_certfile="../certificate_root.pem"
+    ssl_keyfile="private_leaf.key", 
+    ssl_certfile="certificate_leaf.pem",
+    ssl_ca_certs=mkcert_ca
 )
 server = uvicorn.Server(config)
 
 if __name__ == "__main__":
-    try:
-        server.run()
-    except KeyboardInterrupt:
-        # Swallow it or log cleanly
-        print("KeyboardInterrupt: Lifespan cancelled during shutdown.")
+    server.run()

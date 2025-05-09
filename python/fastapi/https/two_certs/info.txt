@@ -1,0 +1,7 @@
+1. use the following commands to generate self-signed cert and key
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private_root.key -out certificate_root.pem -config openssl.cnf
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private_leaf.key -out certificate_leaf.pem -config openssl.cnf
+
+2. run `python leaf.py` and `python root.py` in separate terminals
+3. visit https://localhost:8001/ in chrome and click on Advanced → Proceed to localhost (unsafe). this allows us to manually accept the certificate for the leaf.
+4. visit https://localhost:8000/ in chrome and click on Advanced → Proceed to localhost (unsafe). this allows us to manually accept the certificate for the root.

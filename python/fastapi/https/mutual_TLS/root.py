@@ -1,12 +1,15 @@
+from pathlib import Path
+import os
 import uvicorn
 import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+import httpx
 
 
 
-host = "127.0.0.1"
+host = "localhost"
 port = 8000
 
 @asynccontextmanager
@@ -19,6 +22,11 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+
+# Dynamically find mkcert's local CA
+mkcert_ca = Path(os.popen("mkcert -CAROOT").read().strip()) / "rootCA.pem"
+mkcert_ca = str(mkcert_ca)
+print(mkcert_ca)
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -33,23 +41,29 @@ async def read_root():
         </head>
         <body>
             <h1 id="header">Hello from the Root FastAPI Application!</h1>
+            <div id=data_div></div>
             <button hx-get="https://localhost:8001/" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
+            <button hx-get="https://localhost:8000/get_data" hx-trigger="click" hx-target="#data_div" hx-swap="innerHTML">Click to get data from leaf</button>
         </body>
     </html>
     """
+
+
+@app.get("/get_data", response_class=HTMLResponse)
+async def get_data():
+    async with httpx.AsyncClient(verify=mkcert_ca, cert=("certificate_root.pem", "private_root.key")) as client:
+        response = await client.get("https://localhost:8001/library_data")
+        response = response.json()
+        return f"<div>{response['phrase']}</div>"
 
 config = uvicorn.Config(
     app=app, 
     host=host, 
     port=port, 
-    ssl_keyfile="../private_root.key", 
-    ssl_certfile="../certificate_root.pem"
+    ssl_keyfile="private_root.key", 
+    ssl_certfile="certificate_root.pem",
 )
 server = uvicorn.Server(config)
 
 if __name__ == "__main__":
-    try:
-        server.run()
-    except KeyboardInterrupt:
-        # Swallow it or log cleanly
-        print("KeyboardInterrupt: Lifespan cancelled during shutdown.")
+    server.run()
