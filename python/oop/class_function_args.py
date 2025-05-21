@@ -5,8 +5,8 @@ from typing import Callable, Any
 def default_save(filepath: str, model: Any):
     print(f"default saved {filepath}: model type: {type(model)}")
 
-def special_save(filepath: str, model: Any):
-    print(f"specialize saved {filepath}: model type: {type(model)}")
+def special_save(filepath: str, model: Any, model_card: str):
+    print(f"specialize saved {filepath} | model type: {type(model)} | model card: {model_card}")
 
 def default_load(filepath: str, model: Any):
     print(f"default loaded {filepath}: model type: {type(model)}")
@@ -33,9 +33,11 @@ class ModelRegistry(Resource):
 
 
 
-resource = Resource()
-resource.load_file("/hello/there", load_fn=default_load, model="hello")
+if __name__ == "__main__":
+    resource = Resource()
+    resource.load_file("/hello/there", load_fn=default_load, model="hello")
 
-registry = ModelRegistry()
-registry.load_file("/hello/there", model=8)
-registry.load_file("/hello/there", load_fn=default_load, model=8)
+    registry = ModelRegistry()
+    registry.load_file("/hello/there", model=8)
+    registry.load_file("/hello/there", load_fn=default_load, model=8)
+    registry.save_file("/goodbye/again", model=8, model_card="levels")
