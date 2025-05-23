@@ -46,3 +46,6 @@ setting up git tree alias:
 add in the following lines into ~/.gitconfig file:
 [alias]
     tree = log --graph --decorate --pretty=oneline --abbrev-commit
+
+checkout a file from a commit:
+$ git checkout <commit hash> -- <path to file>
