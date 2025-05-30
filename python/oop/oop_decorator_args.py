@@ -2,23 +2,24 @@ import inspect
 
 
 class Parent:
-    def __init__(self, name: str):
+    def __init__(self, name: str, path: str):
         self.name = name
+        self.path = path
     
     def save_resource_decorator(self, state: str = "new"):
         def inner(func):
             def wrapper(*args, **kwargs):
-                print(f"[{self.name}] saving '{state}' resource")
+                print(f"[{self.name}] saving '{state}' resource in {self.path}")
                 func(*args, **kwargs)
-                print(f"[{self.name}] saved '{state}' resource")
+                print(f"[{self.name}] saved '{state}' resource in {self.path}")
             return wrapper
         return inner
 
 
 class Child(Parent):
-    def __init__(self, name: str):
-        super().__init__(name=name)
-    
+    def __init__(self, name: str, path: str):
+        super().__init__(name=name, path=path)
+
     def save_file_decorator(self, state: str = "new"):
         def inner(func):
 
@@ -29,9 +30,11 @@ class Child(Parent):
                 bound.apply_defaults()
                 filename = bound.arguments.get("filename")
 
-                print(f"[{self.name}] saving file → {filename}")
+                filepath = f"{self.path}/{filename}"
+
+                print(f"[{self.name}] saving file → {filename} at {filepath}")
                 func(*args, **kwargs)
-                print(f"[{self.name}] saved file → {filename}")
+                print(f"[{self.name}] saved file → {filename} at {filepath}")
 
             return wrapper
         return inner
@@ -50,14 +53,14 @@ class Child(Parent):
         def save_fn(filename: str, data: str):
             print(f"{data} is in {filename}: current")
         
-        save_new_fn("/path/to/new/file.txt", "new hello")
+        save_new_fn("new.txt", "new hello")
         print("---------------------------")
-        save_old_fn("/path/to/new/file.txt", "old hello")
+        save_old_fn("old.txt", "old hello")
         print("---------------------------")
-        save_fn("/path/to/current/file.txt", "current hello")
-    
+        save_fn("current.txt", "current hello")
+
 
 
 if __name__ == "__main__":
-    child = Child("Minh")
+    child = Child("Minh", "/path/to/resources")
     child.child_method()
