@@ -54,6 +54,7 @@ class MainApp(FastAPI):
 
                     <!-- Static files for app1 -->
                     <link rel="stylesheet" href="/app1/static/style.css">
+                    <!-- <link rel="stylesheet" href="http://127.0.0.1:8000/app1/static/style.css">  works too -->
 
                     <!-- Static files for app2 -->
                     <link rel="stylesheet" href="/app2/static/style.css">
