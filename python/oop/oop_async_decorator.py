@@ -42,7 +42,9 @@ class Child(Parent):
                 if filename is None:
                     raise ValueError(f"'filename' must be passed when calling '{func.__name__}'")
 
+                # Construct the file path and update filename in kwargs
                 filepath = f"{self.path}/{filename}"
+                kwargs["filename"] = filepath
 
                 print(f"[{self.name}] saving file → {filename} at {filepath}")
                 await asyncio.sleep(2)  # Simulating an async operation
@@ -73,7 +75,7 @@ class Child(Parent):
         async def save_fn(filename: str, data: str):
             print(f"{data} is in {filename}: current")
 
-        await save_fn("current.txt", "current hello")
+        await save_fn(filename="current.txt", data="current hello")
         print("---------------------------")
 
 
