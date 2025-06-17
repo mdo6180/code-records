@@ -3,7 +3,6 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-import httpx
 
 
 
@@ -35,12 +34,8 @@ async def read_root():
         </head>
         <body>
             <h1 id="header">Hello from the Root FastAPI Application!</h1>
-<<<<<<< HEAD:python/fastapi/https/basic_example/root.py
-            <button hx-get="https://localhost:8001/" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
-=======
             <div id=data_div></div>
             <button hx-get="https://localhost:8000/get_data" hx-trigger="click" hx-target="#data_div" hx-swap="innerHTML">Click to get data from leaf</button>
->>>>>>> 6eae4d54eb937ed47ba3715f97b05fef9eb2cffc:python/fastapi/https/basic_example/main.py
         </body>
     </html>
     """
@@ -60,6 +55,9 @@ config = uvicorn.Config(
 )
 server = uvicorn.Server(config)
 
+
+# Note: to run this example, run the following command in the terminal:
+# python main.py
 if __name__ == "__main__":
     try:
         server.run()
