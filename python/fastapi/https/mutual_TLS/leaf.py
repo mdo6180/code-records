@@ -5,7 +5,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+import httpx
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -50,6 +50,15 @@ async def read_leaf():
 @app.get("/library_data")
 async def library_data():
     return {"phrase": "hello world"}
+
+
+@app.get("/query", response_class=HTMLResponse)
+async def query_data():
+    async with httpx.AsyncClient(verify=mkcert_ca, cert=("certificate_leaf.pem", "private_leaf.key")) as client:
+        response = await client.get("https://localhost:8000/data_query")
+        response = response.json()
+        return f"<div>{response['message']}</div>"
+
 
 config = uvicorn.Config(
     app=app, 

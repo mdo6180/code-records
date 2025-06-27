@@ -58,6 +58,7 @@ async def read_root():
             <div id=data_div></div>
             <button hx-get="https://localhost:8001/" hx-trigger="click" hx-target="#header" hx-swap="outerHTML">Click here to see leaf</button>
             <button hx-get="https://localhost:8000/get_data" hx-trigger="click" hx-target="#data_div" hx-swap="innerHTML">Click to get data from leaf</button>
+            <button hx-get="https://localhost:8001/query" hx-trigger="click" hx-target="#data_div" hx-swap="innerHTML">Click to trigger leaf data query</button>
         </body>
     </html>
     """
@@ -69,6 +70,12 @@ async def get_data():
         response = await client.get("https://localhost:8001/library_data")
         response = response.json()
         return f"<div>{response['phrase']}</div>"
+
+
+@app.get("/data_query")
+async def data_query():
+    return {"message": "Data query successful from root application."}
+
 
 config = uvicorn.Config(
     app=app, 
