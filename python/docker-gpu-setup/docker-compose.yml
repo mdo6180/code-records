@@ -1,0 +1,18 @@
+services:
+  pipeline:
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - type: bind
+        source: ./path/to/workdir   # This is the path on the host machine where the work directory is located
+        target: /path/to/workdir/inside/container # This is the path inside the container where the work directory will be mounted
+    ports:
+      - 8000:8000
+    deploy:   # This section is used for deployment configurations, which can include resource reservations for GPUs
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
