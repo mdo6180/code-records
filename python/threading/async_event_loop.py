@@ -50,6 +50,7 @@ def main() -> None:
 
     start_time = datetime.now()
 
+    # schedule the coroutine to run in the event loop in the background thread
     task = asyncio.run_coroutine_threadsafe(fetch_all_urls(URLS), loop)
 
     # the call to `result()` will block until the coroutine is done
