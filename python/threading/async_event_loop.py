@@ -51,6 +51,8 @@ def main() -> None:
     start_time = datetime.now()
 
     task = asyncio.run_coroutine_threadsafe(fetch_all_urls(URLS), loop)
+
+    # the call to `result()` will block until the coroutine is done
     for url, status_code in task.result():
         print(f"{url} -> {status_code}")
 
