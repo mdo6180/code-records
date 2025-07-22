@@ -35,6 +35,9 @@ async def lifespan(app: FastAPI):
     # get the event loop for the FastAPI app
     loop = asyncio.get_event_loop()
 
+    # Note: we didn't need to call asyncio.set_event_loop(loop) in the main thread 
+    # because FastAPI (and Uvicorn) already creates and sets the event loop for the main thread as part of its startup process.
+
     # Launch multiple background threads that submit to the loop
     for thread_id in range(3):
         t = threading.Thread(target=submit_jobs_from_thread, args=(thread_id, loop), daemon=True)
