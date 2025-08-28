@@ -11,41 +11,43 @@ const svg = d3.select("#my_dataviz")
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-//Read the data
-d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv",
+// retrieve the data from the `data-graph` attribute in the script tag
+var scriptTag = document.querySelector('script[src="/js/line_chart.js"]');
+const graph_data = JSON.parse(scriptTag.dataset.graph);
 
-  // When reading the csv, I must format variables:
-  function(d){
-    return { date : d3.timeParse("%Y-%m-%d")(d.date), value : d.value }
-  }).then(
+// Use the embedded graph_data instead of loading a CSV
+const parseDate = d3.timeParse("%Y-%m-%d");
+const data = graph_data.map(d => ({
+  date: parseDate(d.date),
+  value: +d.value
+}));
 
-  // Now I can use this dataset:
-  function(data) {
+// Now I can use this dataset:
+  
+// Add X axis --> it is a date format
+const x = d3.scaleTime()
+  .domain(d3.extent(data, d => d.date))
+  .range([0, width]);
 
-    // Add X axis --> it is a date format
-    const x = d3.scaleTime()
-      .domain(d3.extent(data, function(d) { return d.date; }))
-      .range([ 0, width ]);
-    svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x));
+svg.append("g")
+  .attr("transform", `translate(0, ${height})`)
+  .call(d3.axisBottom(x));
 
-    // Add Y axis
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return +d.value; })])
-      .range([ height, 0 ]);
-    svg.append("g")
-      .call(d3.axisLeft(y));
+// Add Y axis
+const y = d3.scaleLinear()
+  .domain([0, d3.max(data, d => d.value)])
+  .range([height, 0]);
 
-    // Add the line
-    svg.append("path")
-      .datum(data)
-      .attr("fill", "none")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
-      .attr("d", d3.line()
-        .x(function(d) { return x(d.date) })
-        .y(function(d) { return y(d.value) })
-        )
+svg.append("g")
+  .call(d3.axisLeft(y));
 
-})
+// Add the line
+svg.append("path")
+  .datum(data)
+  .attr("fill", "none")
+  .attr("stroke", "steelblue")
+  .attr("stroke-width", 1.5)
+  .attr("d", d3.line()
+    .x(d => x(d.date))
+    .y(d => y(d.value))
+  );

@@ -1,3 +1,6 @@
+import csv
+import json
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -10,6 +13,13 @@ app.mount("/js", StaticFiles(directory="./js"), name="js")
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
+    
+    # replace this code with code to read in your own data
+    with open("line_plot.csv", "r") as f:
+        reader = csv.DictReader(f)
+        data = [row for row in reader]
+        data_json = json.dumps(data)
+
     return f"""
     <!DOCTYPE html>
     <html>
@@ -28,8 +38,8 @@ async def home():
 
             <!-- Create a div where the graph will take place -->
             <div id="my_dataviz"></div>
-            
-            <script src="/js/line_chart.js"></script>
+
+            <script src="/js/line_chart.js" data-graph='{data_json}'></script>
         </body>
     </html>
     """
