@@ -1,0 +1,176 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "examples": {
+            "@id": "cr:examples",
+            "@type": "@json"
+        },
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "samplingRate": "cr:samplingRate",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "@type": "sc:Dataset",
+    "name": "Test Text Dataset",
+    "description": "A simple Croissant dataset containing local text files for testing.",
+    "conformsTo": "http://mlcommons.org/croissant/1.0",
+    "datePublished": "2025-10-14",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "url": "https://example.com/dataset/test-text",
+    "distribution": [
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file8.txt",
+            "contentUrl": "test_file8.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "b84486cd6038355076f43fb53f2cf07ac4121bd73d9f9c322408e4b48c01dda3"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file9.txt",
+            "contentUrl": "test_file9.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "e63164b8e2e878ef033a636f4371c18b8b553ffde5930d7bb142583ddf8ce978"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file2.txt",
+            "contentUrl": "test_file2.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "23c4a89dc5b6aaad274ba61dddae66e0996fa934c002cfd17962685d84fbcdcc"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file3.txt",
+            "contentUrl": "test_file3.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "b1dd04bcfa1442fbae65cf4237a492d77382716af1b280619941e95d928a8a78"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file1.txt",
+            "contentUrl": "test_file1.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "420fcb9a9254b6f8ef4ada21dbd63e91c57e0122a1b48accc92e2a01e270845a"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file0.txt",
+            "contentUrl": "test_file0.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "aa97300b9f5a303c685fde0703d3b6887d212e7e354f41aeb3408a56acd2262b"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file4.txt",
+            "contentUrl": "test_file4.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "083bdb86930ae7014d2ec55bb7f0b592d7c3384c43024ca4a06335b5093119b9"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file5.txt",
+            "contentUrl": "test_file5.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "ef136f64a66f8f4287660031913533c4df26fee8591f2b31065568e7f691ea3a"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file7.txt",
+            "contentUrl": "test_file7.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "aa37885152444c24b8f0e1b93f756702707dcc8b9d97adef63ca6ba0ea193712"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file6.txt",
+            "contentUrl": "test_file6.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "ff09999066a41ab777f47aca47f171b05d889cefd8230c33165bd97bb28538a8"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "data_card_1.json",
+            "contentUrl": "data_card_1.json",
+            "encodingFormat": "text/plain",
+            "sha256": "3b6f2686354352d23b6b6ba8444ae5b5e4473b740f71cfb95e6f133b8416ede4"
+        },
+        {
+            "@type": "cr:FileSet",
+            "@id": "text-files",
+            "name": "text-files",
+            "encodingFormat": "text/plain",
+            "includes": "dataset/*.txt"
+        }
+    ],
+    "recordSet": [
+        {
+            "@type": "cr:RecordSet",
+            "name": "examples",
+            "description": "Each record corresponds to one text file.",
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "name": "filename",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "text-files"
+                        },
+                        "extract": {
+                            "fileProperty": "filename"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "name": "content",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "text-files"
+                        },
+                        "extract": {
+                            "fileProperty": "content"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
