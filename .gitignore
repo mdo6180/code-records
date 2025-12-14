@@ -16,3 +16,4 @@ main
 logs/
 
 *.prof
+*.sqlite

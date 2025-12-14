@@ -1,0 +1,116 @@
+{
+    "@context": {
+        "@language": "en",
+        "@vocab": "https://schema.org/",
+        "citeAs": "cr:citeAs",
+        "column": "cr:column",
+        "conformsTo": "dct:conformsTo",
+        "cr": "http://mlcommons.org/croissant/",
+        "rai": "http://mlcommons.org/croissant/RAI/",
+        "data": {
+            "@id": "cr:data",
+            "@type": "@json"
+        },
+        "dataType": {
+            "@id": "cr:dataType",
+            "@type": "@vocab"
+        },
+        "dct": "http://purl.org/dc/terms/",
+        "examples": {
+            "@id": "cr:examples",
+            "@type": "@json"
+        },
+        "extract": "cr:extract",
+        "field": "cr:field",
+        "fileProperty": "cr:fileProperty",
+        "fileObject": "cr:fileObject",
+        "fileSet": "cr:fileSet",
+        "format": "cr:format",
+        "includes": "cr:includes",
+        "isLiveDataset": "cr:isLiveDataset",
+        "jsonPath": "cr:jsonPath",
+        "key": "cr:key",
+        "md5": "cr:md5",
+        "parentField": "cr:parentField",
+        "path": "cr:path",
+        "recordSet": "cr:recordSet",
+        "references": "cr:references",
+        "regex": "cr:regex",
+        "repeated": "cr:repeated",
+        "replace": "cr:replace",
+        "samplingRate": "cr:samplingRate",
+        "sc": "https://schema.org/",
+        "separator": "cr:separator",
+        "source": "cr:source",
+        "subField": "cr:subField",
+        "transform": "cr:transform"
+    },
+    "@type": "sc:Dataset",
+    "name": "Test Text Dataset",
+    "description": "A simple Croissant dataset containing local text files for testing.",
+    "conformsTo": "http://mlcommons.org/croissant/1.0",
+    "datePublished": "2025-10-15",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "url": "https://example.com/dataset/test-text",
+    "distribution": [
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file8.txt",
+            "contentUrl": "test_file8.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "166dda97af3f6289681949cd3102e81eb74805a9acb4687c2a20e9e42fe3652d"
+        },
+        {
+            "@type": "cr:FileObject",
+            "name": "test_file9.txt",
+            "contentUrl": "test_file9.txt",
+            "encodingFormat": "text/plain",
+            "sha256": "0188541ed5d6948c4f482fa92b4ce53bd98b73f6cc7fa584e3bbe28cde0a403b"
+        },
+        {
+            "@type": "cr:FileSet",
+            "@id": "text-files",
+            "name": "text-files",
+            "encodingFormat": "text/plain",
+            "includes": "./testing_artifacts/dataset_store/*.txt"
+        }
+    ],
+    "recordSet": [
+        {
+            "@type": "cr:RecordSet",
+            "name": "examples",
+            "description": "Each record corresponds to one text file.",
+            "key": {
+                "@id": "hash"
+            },
+            "field": [
+                {
+                    "@type": "cr:Field",
+                    "name": "filename",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "text-files"
+                        },
+                        "extract": {
+                            "fileProperty": "filename"
+                        }
+                    }
+                },
+                {
+                    "@type": "cr:Field",
+                    "name": "content",
+                    "dataType": "sc:Text",
+                    "source": {
+                        "fileSet": {
+                            "@id": "text-files"
+                        },
+                        "extract": {
+                            "fileProperty": "content"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
