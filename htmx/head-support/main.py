@@ -25,6 +25,8 @@ from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
+html = str   # alias of the str type for syntax highlighting using the Python Inline Source Syntax Highlighting extension by Sam Willis in VSCode.
+
 
 newline = "\n"
 app = FastAPI()
@@ -33,7 +35,7 @@ app.mount("/css", StaticFiles(directory="./css"), name="css")
 
 
 def head(user_tags: str = ""):
-    return f"""
+    head_html: html = f"""
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
@@ -49,11 +51,12 @@ def head(user_tags: str = ""):
         <link hx-head="re-eval" rel="stylesheet" href="/css/main.css">
     </head> 
     """
+    return head_html
 
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    return f"""
+    home_html: html = f"""
     <!DOCTYPE html>
     <html>
         <head hx-head="merge">
@@ -75,10 +78,12 @@ async def home():
         </body>
     </html>
     """
+    return home_html
+
 
 @app.get("/no_styling", response_class=HTMLResponse)
 async def no_styling():
-    return f"""
+    no_styling_html: html = f"""
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
@@ -92,10 +97,12 @@ async def no_styling():
     </head> 
     <h1 id="header">No styling</h1>
     """
+    return no_styling_html
+
 
 @app.get("/style1", response_class=HTMLResponse)
 async def home1():
-    return f"""
+    style1_html: html = f"""
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
@@ -110,11 +117,12 @@ async def home1():
     </head>
     <h1 id="header">/style1 styling</h1>
     """
+    return style1_html
 
 
 @app.get("/style2", response_class=HTMLResponse)
 async def home2():
-    return f"""
+    style2_html: html = f"""
     <head hx-head="merge">
         <meta hx-preserve="true" charset="UTF-8">
         <title hx-preserve="true">HTMX Indicator</title>
@@ -129,3 +137,4 @@ async def home2():
     </head>
     <h1 id="header">/style2 styling</h1>
     """
+    return style2_html
