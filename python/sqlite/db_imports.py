@@ -24,7 +24,7 @@ target_con.close()
 time.sleep(5)  # Simulate some delay before the import
 
 
-def import_data(target_db: str, source_db: str):
+def import_data(target_db: str, target_table: str, source_db: str, source_table: str):
     conn = sqlite3.connect(target_db)
     try:
         cur = conn.cursor()
@@ -32,9 +32,9 @@ def import_data(target_db: str, source_db: str):
         cur.execute("BEGIN TRANSACTION")
 
         # Append test tables
-        cur.execute("""
-            INSERT OR IGNORE INTO main.test
-            SELECT * FROM incoming.test
+        cur.execute(f"""
+            INSERT OR IGNORE INTO main.{target_table}
+            SELECT * FROM incoming.{source_table}
         """)
 
         conn.commit()
@@ -45,5 +45,5 @@ def import_data(target_db: str, source_db: str):
     finally:
         conn.close()
 
-import_data("target.sqlite", "source.sqlite")
+import_data("target.sqlite", "test", "source.sqlite", "test")
 
