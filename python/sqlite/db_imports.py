@@ -29,7 +29,7 @@ def import_data(target_db: str, target_table: str, source_db: str, source_table:
     try:
         cur = conn.cursor()
         cur.execute("ATTACH DATABASE ? AS incoming", (source_db,))  
-        cur.execute("BEGIN TRANSACTION")
+        cur.execute("BEGIN IMMEDIATE TRANSACTION")
 
         # Append test tables
         cur.execute(f"""
