@@ -13,9 +13,9 @@ app.mount("/js", StaticFiles(directory="js"), name="js")
 app.mount("/css", StaticFiles(directory="css"), name="css")
 
 
-base_url = "http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/"
-
 def html_template() -> str:
+    base_url = "http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/"
+
     home_html: html = f"""
     <!DOCTYPE html>
     <html>
