@@ -13,7 +13,9 @@ app.mount("/js", StaticFiles(directory="js"), name="js")
 app.mount("/css", StaticFiles(directory="css"), name="css")
 
 
-def html_template(base_url: str = ""):
+base_url = "http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/"
+
+def html_template() -> str:
     home_html: html = f"""
     <!DOCTYPE html>
     <html>
@@ -21,13 +23,11 @@ def html_template(base_url: str = ""):
             <meta charset="UTF-8">
             <title>HTMX</title>
 
-            <base href="{base_url}">
-
             <!-- non-minified Htmx -->
-            <script src="js/htmx.js" type="text/javascript"></script>
+            <script src="{base_url}js/htmx.js" type="text/javascript"></script>
 
             <!-- Add more dependencies here -->
-            <link rel="stylesheet" href="css/styles.css">
+            <link rel="stylesheet" href="{base_url}css/styles.css">
         </head>
         <body>
             <button id="display-btn" hx-get="display" hx-target="#display" hx-swap="outerHTML">Get display</button>
@@ -39,7 +39,7 @@ def html_template(base_url: str = ""):
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    return html_template("http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/")
+    return html_template()
 
 @app.get("/display", response_class=HTMLResponse)
 async def display():
