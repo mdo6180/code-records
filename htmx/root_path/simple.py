@@ -12,7 +12,6 @@ app = FastAPI(root_path="/ged-edap-modelsec/test-container-min-5/anacostia")
 app.mount("/js", StaticFiles(directory="js"), name="js")
 app.mount("/css", StaticFiles(directory="css"), name="css")
 
-
 def html_template() -> str:
     base_url = "http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/"
 
@@ -24,13 +23,14 @@ def html_template() -> str:
             <title>HTMX</title>
 
             <!-- non-minified Htmx -->
-            <script src="{base_url}js/htmx.js" type="text/javascript"></script>
+            <script src="js/htmx.js" type="text/javascript"></script>
 
             <!-- Add more dependencies here -->
-            <link rel="stylesheet" href="{base_url}css/styles.css">
+            <link rel="stylesheet" href="css/styles.css">
+            <script src="js/settings.js" type="text/javascript"></script>
         </head>
         <body>
-            <button id="display-btn" hx-get="display" hx-target="#display" hx-swap="outerHTML">Get display</button>
+            <button id="display-btn" hx-get="/display" hx-target="#display" hx-swap="outerHTML">Get display</button>
             <div id="display"></div>
         </body>
     </html>
