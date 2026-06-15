@@ -8,8 +8,9 @@ html = str   # alias of the str type for syntax highlighting using the Python In
 newline = "\n"
 
 # set the home page URL to http://localhost:8000/htmx/
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="../static"), name="static")
+app = FastAPI(root_path="/ged-edap-modelsec/test-container-min-5/anacostia")
+app.mount("/js", StaticFiles(directory="js"), name="js")
+app.mount("/css", StaticFiles(directory="css"), name="css")
 
 
 def html_template(base_url: str = ""):
@@ -20,15 +21,16 @@ def html_template(base_url: str = ""):
             <meta charset="UTF-8">
             <title>HTMX</title>
 
-            <!-- <base href="{base_url}"> -->
-    
+            <base href="{base_url}">
+
             <!-- non-minified Htmx -->
-            <script src="/static/js/htmx.js" type="text/javascript"></script>
+            <script src="js/htmx.js" type="text/javascript"></script>
 
             <!-- Add more dependencies here -->
+            <link rel="stylesheet" href="css/styles.css">
         </head>
         <body>
-            <button hx-get="display" hx-target="#display" hx-swap="outerHTML">Get display</button>
+            <button id="display-btn" hx-get="display" hx-target="#display" hx-swap="outerHTML">Get display</button>
             <div id="display"></div>
         </body>
     </html>
@@ -37,7 +39,7 @@ def html_template(base_url: str = ""):
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    return html_template("http://localhost:8000/htmx/")
+    return html_template("http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/")
 
 @app.get("/display", response_class=HTMLResponse)
 async def display():
