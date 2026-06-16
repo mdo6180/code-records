@@ -9,12 +9,14 @@ newline = "\n"
 
 root_path = "/ged-edap-modelsec/test-container-min-5/anacostia"
 
-# set the home page URL to http://localhost:8000/htmx/
+# set the root path for the application. This is necessary because our application is being served at a subpath of the domain, rather than at the root.
 app = FastAPI(root_path=root_path)
 app.mount("/js", StaticFiles(directory="js"), name="js")
 app.mount("/css", StaticFiles(directory="css"), name="css")
 
 def html_template(root_path: str) -> str:
+    base_url = "http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia"
+
     home_html: html = f"""
     <!DOCTYPE html>
     <html>
