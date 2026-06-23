@@ -18,6 +18,6 @@ def read_sub():
     return {"message": "Hello World from sub API"}
 
 
-app.mount("/subapi", subapi)
+app.mount("/subapi/hypermedia", subapi)
 
-# go to http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/subapi/sub to see the sub API response
+# go to http://anacostia.local/ged-edap-modelsec/test-container-min-5/anacostia/subapi/hypermedia/sub to see the sub API response
