@@ -1,0 +1,35 @@
+instructions on how to run these scripts:
+
+1. Install the sqlite-vec extension (still in prereleased beta):
+$ curl -o install.sh -L https://github.com/asg017/sqlite-vec/releases/latest/download/install.sh
+$ chmod +x ./install.sh
+$ sudo ./install.sh
+
+2. Install SQLite:
+$ brew install sqlite
+
+3. Check if SQLite is installed correctly
+$ /opt/homebrew/opt/sqlite/bin/sqlite3 test.db
+sqlite> .load ./vec0
+sqlite> SELECT vec_version();
+sqlite> .exit
+
+"sqlite> SELECT vec_version()" command should return the following:
++---------------+
+| vec_version() |
++---------------+
+| v0.1.9        |
++---------------+
+
+4. Make that CLI the default in future terminal sessions:
+$ echo 'export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"' >> ~/.zshrc
+$ source ~/.zshrc
+$ which sqlite3
+
+"$ which sqlite3" command should return "/opt/homebrew/opt/sqlite/bin/sqlite3"
+
+5. Create the database and the table
+$ sqlite3 test.db -cmd ".load ./vec0" < create_table.sql
+
+6. Query the database
+$ sqlite3 test.db -cmd ".load ./vec0" < query.sql

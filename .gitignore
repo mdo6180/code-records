@@ -17,3 +17,6 @@ logs/
 
 *.prof
 *.sqlite
+install.sh
+*.dylib
+*.db
