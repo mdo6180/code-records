@@ -1,0 +1,10 @@
+instructions on how to run these scripts:
+
+1. Create the database and the table
+$ cd sqlite/fts5
+$ sqlite3 database.sqlite < create_table.sql
+
+2. Query the database
+$ sqlite3 database.sqlite < search.sql
+
+# think of the artifacts table as a table that records artifact location for a kafka topic (hence the topic, partition, and offset fields)
