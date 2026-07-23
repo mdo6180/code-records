@@ -1,0 +1,9 @@
+instructions on how to run these scripts:
+
+1. Create the databases and the tables
+$ cd sqlite/attach_db
+$ sqlite3 high_side.db < create_high_side.sql
+$ sqlite3 low_side.db < create_low_side.sql
+
+2. Import all rows from low_side.db to high_side.db:
+$ sqlite3 high_side.db < import.sql
