@@ -15,6 +15,7 @@ def copy_all_tables(high_side_db: Path, low_side_db: Path) -> None:
         )
 
         try:
+            # extract the table names and their creation SQL statements from the low side database
             tables = connection.execute(
                 """
                 SELECT name, sql
@@ -29,8 +30,10 @@ def copy_all_tables(high_side_db: Path, low_side_db: Path) -> None:
             connection.execute("BEGIN IMMEDIATE")
 
             for table_name, create_sql in tables:
+                # format the table name to be safely used in SQL statements
                 quoted_table = quote_identifier(table_name)
 
+                # check if the table already exists in the main database
                 exists = connection.execute(
                     """
                     SELECT 1
@@ -41,9 +44,11 @@ def copy_all_tables(high_side_db: Path, low_side_db: Path) -> None:
                     (table_name,),
                 ).fetchone()
 
+                # if the table does not exist, create it in the main database
                 if exists is None:
                     connection.execute(create_sql)
 
+                # copy the data from the low side table to the main database table
                 connection.execute(
                     f"""
                     INSERT OR IGNORE INTO main.{quoted_table}
