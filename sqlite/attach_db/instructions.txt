@@ -7,3 +7,15 @@ $ sqlite3 low_side.db < create_low_side.sql
 
 2. Import all rows from low_side.db to high_side.db:
 $ sqlite3 high_side.db < import.sql
+
+To run copy_tables.py:
+1. Delete databases
+$ rm high_side.db low_side.db
+
+2. Create the databases and the tables
+$ cd sqlite/attach_db
+$ sqlite3 high_side.db < create_high_side.sql
+$ sqlite3 low_side.db < create_low_side.sql
+
+3. Run the script:
+$ python copy_tables.py
