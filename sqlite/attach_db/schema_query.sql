@@ -6,7 +6,7 @@ BEGIN;
 -- display the schema of the low-side database
 SELECT * FROM low.sqlite_schema;
 
--- display the schema of the low-side database, filtering out internal SQLite tables and ensuring that only tables with valid SQL definitions are shown
+-- filter out internal SQLite tables and ensuring that only tables with valid SQL definitions are shown
 SELECT name, sql
 FROM low.sqlite_schema
 WHERE type = 'table'
