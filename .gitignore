@@ -20,3 +20,5 @@ logs/
 install.sh
 *.dylib
 *.db
+
+mydata/

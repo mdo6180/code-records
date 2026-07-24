@@ -1,0 +1,5 @@
+1. Create the large data file:
+$ python create_data.py
+
+2. Create the bag:
+$ python main.py
