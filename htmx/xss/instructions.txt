@@ -1,0 +1,17 @@
+for each test, enter the following into the unsafe input field and the safe input field and observe the differnces:
+
+
+test 1:
+<div>
+    <b>Hello World</b>
+</div>
+
+
+test 2:
+<img src=x onerror="alert('XSS')">
+
+
+test: 3
+<div style="padding:10px;border:1px solid red">
+    <img src=x onerror="alert('XSS')">
+</div>
