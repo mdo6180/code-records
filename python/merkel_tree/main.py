@@ -4,7 +4,7 @@ import debugpy
 import argparse
 
 
-argument_parser = argparse.ArgumentParser(description="Validate a BagIt bag.")
+argument_parser = argparse.ArgumentParser(description="Simple Merkle Tree Example")
 argument_parser.add_argument("-d", "--debug", action="store_true", help="Enable debugging mode.")
 args = argument_parser.parse_args()
 
