@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 # Constants
 g = 9.81   # Gravitational acceleration (m/s^2)
 m = 0.18   # Mass (kg)
+#m = 0.21   # Mass (kg)     weight limit
+#m = 0.22   # over weight limit
 
 
 # dx/dt = f(t, x)
@@ -61,19 +63,19 @@ u = [force(t, x) for t, x in zip(sol.t, sol.y.T)]
 fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(6, 10), sharex=True)
 
 # Plot altitude: z vs t
-ax1.plot(sol.t, sol.y[0], 'k-o', color="blue")
+ax1.plot(sol.t, sol.y[0], '-o', color="blue")
 ax1.set_title("Quadrotor Altitude vs Time")
 ax1.set_xlabel("Time (s)")
 ax1.set_ylabel("z(t): Altitude (m)")
 
 # Plot velocity: vz vs t
-ax2.plot(sol.t, sol.y[1], 'k-o', color="red")
+ax2.plot(sol.t, sol.y[1], '-o', color="red")
 ax2.set_title("Quadrotor Vertical Velocity vs Time")
 ax2.set_xlabel("Time (s)")
 ax2.set_ylabel("vz(t): Vertical Velocity (m/s)")
 
 # Plot control input: u vs t
-ax3.plot(sol.t, u, 'k-o', color="green")
+ax3.plot(sol.t, u, '-o', color="green")
 ax3.set_title("Quadrotor Control Input Force vs Time")
 ax3.set_xlabel("Time (s)")
 ax3.set_ylabel("u(t): Control Input Force (N)")
