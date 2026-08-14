@@ -17,7 +17,7 @@ class ProofEntry:
 def sha256(data: bytes) -> Hash:
     return hashlib.sha256(data).digest()
 
-
+# note: the "\x00" and "\x01" prefixes are used to domain-separate the leaf and node hashes, preventing second-preimage attacks.
 def hash_leaf(data: bytes) -> Hash:
     """Domain-separated Merkle leaf hash."""
     return sha256(b"\x00" + data)

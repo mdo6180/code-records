@@ -19,11 +19,24 @@ m = 0.18   # Mass (kg)
 def xdot(t, x):
     # Desired z, vz, az
     z_des  = 1
+
+    # desired vertical velocity (m/s) is set to 0 for hover (no vertical movement), 
+    # if you want to move at a certain velocity e.g., like in situation with manual controller input, 
+    # you can set this to a positive or negative value respectively
     vz_des = 0
     az_des = 0
 
     # PD Controller (input, u)
+
+    # Proportional gain (kp) is set to 30, which is a common value for quadrotor control.
+    # if kp is too low (kp=1), the system will be slow to respond and will take a long time to reach the desired state.
+    # if kp is too high (kp=100), the system will be very responsive but will overshoot and oscillate around the desired state making it harder to hover.
     kp = 30
+
+    # derivative gain (kv) is set to 3, which is a common value for quadrotor control.
+    # this is an underdamped system, so the kv value is set to a value that will provide a good balance between responsiveness and stability.
+    # kv=1 will increase the overshoot and oscillations, while kv=5 will make the system more stable but slower to respond 
+    # and thus will take a longer time to reach the desired state (see what happens when kv=20).
     kv = 3
     u  = m * (az_des + kp * (z_des - x[0]) + kv * (vz_des - x[1]) + g)
     
