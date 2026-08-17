@@ -1,3 +1,4 @@
+import time
 import matplotlib.pyplot as plt
 
 
@@ -99,7 +100,9 @@ def process(force, z, velocity, dt):
 
 if __name__ == "__main__":
 
-    for i in range(1000):
+    i = 0
+    simulation_time = 10  # seconds
+    while True:
 
         control, integral = drone_simplified_pid_controller(z_desired, z_t, v_t, kp, ki, kd, integral, dt)
 
@@ -110,6 +113,13 @@ if __name__ == "__main__":
         velocity_values.append(v_t)
         control_values.append(control)
         setpoint_values.append(z_desired)
+
+        time.sleep(dt)  # Simulate real-time by sleeping for dt seconds
+
+        # in real time, the loop would run indefinitely, but for simulation purposes, we can stop after a certain time
+        i += 1
+        if i * dt > simulation_time:  # Run the simulation for 10 seconds
+            break
 
     plt.figure(figsize=(12, 8))
 
