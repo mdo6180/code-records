@@ -1,3 +1,5 @@
+# https://www.digikey.com/en/maker/tutorials/2024/implementing-a-pid-controller-algorithm-in-python
+
 import time
 import matplotlib.pyplot as plt
 

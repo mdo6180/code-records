@@ -1,0 +1,20 @@
+Hierarchy of a drone controller:
+
+            Trajectory Planner
+                    │
+                    │
+        z_desired, v_desired, a_desired
+                    │
+                    ▼
+            Altitude Controller
+                    │
+                    │ desired thrust
+                    ▼
+Motor Controller / Motor Mixer / Control Allocator
+                    │
+                    │ pwm signals
+                    ▼
+                Drone Motors
+                    │
+                    │ z, v
+                    └──────── feedback to Altitude Controller
