@@ -2,13 +2,11 @@ Hierarchy of a drone controller:
 
             Trajectory Planner
                     │
-                    │
-        z_desired, v_desired, a_desired
-                    │
+                    │ z_desired, v_desired, a_desired (i.e., next waypoint along trajectory)
                     ▼
-            Altitude Controller
+    Altitude, Roll, Pitch, Yaw Controllers
                     │
-                    │ desired thrust
+                    │ desired thrust / roll, pitch, yaw torques
                     ▼
 Motor Controller / Motor Mixer / Control Allocator
                     │
@@ -17,4 +15,4 @@ Motor Controller / Motor Mixer / Control Allocator
                 Drone Motors
                     │
                     │ z, v
-                    └──────── feedback to Altitude Controller
+                    └──────── feedback to Controllers
