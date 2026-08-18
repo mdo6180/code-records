@@ -87,7 +87,7 @@ def drone_full_pid_controller(z_desired, z_t, v_t, kp, ki, kd, integral, dt):
 
 def process(force, z, velocity, dt):
     # Net vertical acceleration
-    acceleration = force / m_actual - g
+    acceleration = (force - m_actual * g) / m_actual  # (N - N) / kg = m/s^2
 
     # Integrate acceleration -> velocity
     velocity_new = velocity + acceleration * dt     # (m/s^2) * s = m/s
