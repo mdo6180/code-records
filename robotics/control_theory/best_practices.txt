@@ -1,0 +1,29 @@
+1. Break large controllers down into smaller nested controllers (aka cascading controllers)
+    - Note: make sure the inner loop is faster than the outer loop.
+    - The outer loop effectively assumes the inner loop will execute its commands reasonably quickly.
+
+2. Tune each cascading controller from the inside out.
+
+For example, suppose we have the following control loop:
+
+SLOWER
+
+Position
+   ↓
+Velocity
+   ↓
+Attitude
+   ↓
+Angular rate
+
+FASTER
+
+Start tuning the angular rate controller first, then treat that whole subsystem as the plant for the attitude controller,
+then tune the attitude controller, and so on. 
+
+3. Pick the simplest controller possible.
+    - Start with a P controller.
+    - If steady-state error becomes an issue, add in an I controller.
+    - If oscillations becomes an issue, add in a D controller.
+
+4. Optimize the execution time of the inner loop before developing the outer loop.
