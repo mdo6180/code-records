@@ -116,11 +116,13 @@ def velocity_controller(
 def process(thrust, z, vz, dt):
     acceleration = thrust / m_actual - g
 
-    # Integrate acceleration -> velocity
     vz = vz + acceleration * dt
-
-    # Integrate velocity -> altitude
     z = z + vz * dt
+
+    # Simple ground-contact constraint
+    if z < 0.0:
+        z = 0.0
+        vz = 0.0
 
     return z, vz
 
@@ -137,18 +139,30 @@ def process(thrust, z, vz, dt):
 #vz_desired = 0.9
 
 # Set vz=0.0, z=0.0, and then tune outer loop to achieve z_desired for these values
-#z_desired = 0.2
+z_desired = 0.2
 #z_desired = 0.4
 #z_desired = 0.6
 #z_desired = 1.0
 #z_desired = 5.0
 #z_desired = 10.0
 
-# Note: if we set z_desired = 0.2 and kp_z = 2.0, the plot will initially show the drone first flying down to a negative altitude.
-# This is due to the large difference between the expected mass and the actual mass,
-# which leads to a negative velocity, which leads to a negative altitude before the controller corrects itself.
-# In practice, this means the drone will not be able to get off the ground for about 2.5 seconds.
-# Increasing to kp_z = 3.0 will eliminate this issue.
+# Note:
+# With z_desired = 0.2 and kp_z = 2.0, the drone initially descends
+# below z = 0 because the controller calculates gravity compensation
+# using m_estimated = 0.15 kg, while the actual mass is 0.20 kg.
+#
+# Consequently, the initial commanded thrust is less than the actual
+# hover thrust, so the drone accelerates downward until the velocity
+# controller's integral term compensates for the mass-model error.
+#
+# Increasing kp_z to 3.0 produces a larger initial desired velocity,
+# which causes the velocity controller to request more thrust and
+# greatly reduces the initial descent. However, this masks the mass
+# estimation error rather than correcting its underlying cause.
+# But this can still work as the velocity controller will correct itself much quicker, 
+# thus allowing the drone to take off sooner.
+# 
+# However, the correct fix is to use the correct mass in the controller or to fix the process to disallow negative altitudes.
 
 for i in range(2000):
 
