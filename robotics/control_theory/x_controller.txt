@@ -1,0 +1,40 @@
+x_desired
+    |
+    v
+x position controller
+    |
+    v
+vx_desired
+    |
+    v
+x velocity controller
+    |
+    v
+desired horizontal acceleration
+    |
+    v
+desired pitch angle
+    |
+    v
+pitch attitude controller
+    |
+    v
+q_desired
+    |
+    v
+pitch rate controller
+    |
+    v
+tau_y
+
+        T
+       ↗
+      /
+     /    vertical component
+    ↑
+   /|
+  / |
+ /  |
+────── drone tilted forward
+  →
+horizontal thrust component

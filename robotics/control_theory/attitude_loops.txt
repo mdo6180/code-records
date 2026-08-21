@@ -1,0 +1,19 @@
+                    ATTITUDE LOOPS
+                         |
+        +----------------+----------------+
+        |                |                |
+        v                v                v
+      ROLL             PITCH             YAW
+      phi_d            theta_d           psi_d
+        |                |                |
+        v                v                v
+   attitude P       attitude P       attitude P
+        |                |                |
+        v                v                v
+       p_d              q_d              r_d
+        |                |                |
+        v                v                v
+    rate PID         rate PID         rate PID
+        |                |                |
+        v                v                v
+     tau_x            tau_y            tau_z

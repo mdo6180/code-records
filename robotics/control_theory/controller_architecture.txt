@@ -1,0 +1,59 @@
+                 POSITION COMMAND
+                 (x_d, y_d, z_d)
+                        |
+                        v
+              POSITION CONTROLLER
+                        |
+                        v
+              VELOCITY CONTROLLER
+                        |
+                        v
+              desired acceleration
+                 /      |      \
+                /       |       \
+               v        v        v
+           phi_d     theta_d   thrust
+              |         |         |
+              v         v         |
+           roll       pitch       |
+         attitude    attitude     |
+              |         |         |
+              v         v         |
+             p_d       q_d        |
+              |         |         |
+              v         v         |
+          roll rate  pitch rate   |
+              |         |         |
+              v         v         |
+            tau_x     tau_y       |
+                \       |        /
+                 \      |       /
+                  v     v      v
+                   MOTOR MIXER
+                  /  /     \  \
+                M1  M2     M3  M4
+
+
+                    T
+                   ↗
+                  /|
+                 / |
+                /  | T_z
+               /θ  |
+              /    |
+             ●─────→
+               T_x
+
+             drone
+
+
+How to build the setpoint generators for theta_d
+T_x = T * cos(θ)
+T_z = T * sin(θ)
+
+T_x = m * a_x,d
+T_z = mg
+
+T_x / T_z = m * a_x,d / mg = a_x,d / g
+
+θ_d = tan^-1(a_x,d / g)

@@ -1,0 +1,13 @@
+y_desired
+    ↓
+y position controller
+    ↓
+vy_desired
+    ↓
+y velocity controller
+    ↓
+desired lateral acceleration
+    ↓
+phi_desired
+    ↓
+roll controller
