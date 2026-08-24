@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import math
 
 
 # Simulation history
@@ -13,7 +13,8 @@ setpoint_values = []
 
 
 # Desired altitude
-phi_desired = 10.0
+degrees_desired = 10.0
+phi_desired = math.radians(degrees_desired)
 
 # Initial state
 phi = 0.0
