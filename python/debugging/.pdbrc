@@ -1,0 +1,9 @@
+# .pdbrc
+
+alias n next ;; ll
+alias s step ;; ll
+alias r return ;; ll
+alias u up ;; ll
+alias d down ;; ll
+
+# b main.py:2

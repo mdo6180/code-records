@@ -1,0 +1,17 @@
+| Command           | Meaning                                               |
+| ----------------- | ----------------------------------------------------- |
+| `l`               | List nearby source code                               |
+| `ll`              | List the entire current function                      |
+| `n`               | Execute the **next line**, without entering functions |
+| `s`               | Execute the next line and **step into** functions     |
+| `c`               | **Continue** until the next breakpoint                |
+| `p x`             | Print `x`                                             |
+| `pp x`            | Pretty-print `x`                                      |
+| `w`               | Show the call stack                                   |
+| `u`               | Move up one stack frame                               |
+| `d`               | Move down one stack frame                             |
+| `b 15`            | Set breakpoint at line 15                             |
+| `b file.py:15`    | Set breakpoint in another file                        |
+| `b function_name` | Break when a function is called                       |
+| `cl`              | Clear breakpoints                                     |
+| `q`               | Quit                                                  |
