@@ -10,9 +10,7 @@ app = FastAPI()
 
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    '''
-    Instead of placing the hx-confirm on each button (like below), 
-    '''
+    # Instead of placing the hx-confirm on each button (like below), 
     buttons_html: html = f"""
         <button hx-delete="/account" hx-confirm="Are you sure?">
             Delete My Account
@@ -22,9 +20,7 @@ async def home():
         </button>
     """
 
-    '''
-    We can hoist this attribute to a parent element using the :inherited modifier on the attribute:
-    '''
+    # We can hoist this attribute to a parent element using the :inherited modifier on the attribute:
     buttons_html: html = f"""
         <div hx-confirm:inherited="Are you sure?">
             <button hx-delete="/account">
