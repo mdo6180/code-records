@@ -59,11 +59,9 @@ END;
 
 CREATE TABLE IF NOT EXISTS chunks (
     chunk_hash TEXT NOT NULL,
-    manifest_hash TEXT NOT NULL,
+    chunk_index INTEGER NOT NULL,
     chunk_json TEXT NOT NULL,
-    chunk_index INTEGER GENERATED ALWAYS AS (
-        json_extract(chunk_json, '$.chunk_index')
-    ) STORED,
+    manifest_hash TEXT NOT NULL,
     filename TEXT GENERATED ALWAYS AS (
         json_extract(chunk_json, '$.filename')
     ) STORED,
@@ -82,7 +80,7 @@ CREATE TABLE IF NOT EXISTS chunks (
     merkle_proof TEXT GENERATED ALWAYS AS (
         json_extract(chunk_json, '$.merkle_proof')
     ) STORED,
-    PRIMARY KEY (chunk_hash, manifest_hash),
+    PRIMARY KEY (chunk_index, manifest_hash),   /* chunk index is part of the primary key because two chunks can have the same hash (same content) but different indices */
     FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash) ON DELETE CASCADE
 );
 
@@ -142,11 +140,10 @@ VALUES (
     'node2'
 );
 
-/*
-INSERT INTO chunks (chunk_hash, manifest_hash, chunk_json)
+INSERT INTO chunks (chunk_hash, chunk_index, chunk_json, manifest_hash)
 VALUES (
     'chunkhash1',
-    'hash1',
+    0,
     '{
         "chunk_hash": "chunkhash1",
         "transfer_id": "transfer_6f25e1c6e37b4ce183c1a6ab6b0f8b1b",
@@ -167,6 +164,6 @@ VALUES (
                 "hash": "ab7098584b86049b6d29e661024fd5d0f6c58044515a19e51b6696b68b29de63"
             }
         ]
-    }'
+    }',
+    'hash1'
 );
-*/
