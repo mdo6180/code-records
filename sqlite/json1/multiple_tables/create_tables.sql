@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS transfer_artifacts (
     source_pipeline_name TEXT NOT NULL,
     destination_pipeline_name TEXT NOT NULL,
     destination_stream TEXT NOT NULL,
+    transfer_id TEXT NOT NULL,
     PRIMARY KEY (artifact_hash, manifest_hash),
     FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash)
 );
@@ -40,23 +41,55 @@ AFTER INSERT ON transfers
 BEGIN
     INSERT INTO transfer_artifacts (
         artifact_hash,
-        manifest_hash,
         filepath,
         size_bytes,
         source_pipeline_name,
         destination_pipeline_name,
-        destination_stream
+        destination_stream,
+        manifest_hash,
+        transfer_id
     )
     SELECT
         json_extract(artifact.value, '$.artifact_hash'),
-        NEW.manifest_hash,
         json_extract(artifact.value, '$.filepath'),
         json_extract(artifact.value, '$.size_bytes'),
         json_extract(artifact.value, '$.source_pipeline_name'),
         json_extract(artifact.value, '$.destination_pipeline_name'),
-        json_extract(artifact.value, '$.destination_stream')
+        json_extract(artifact.value, '$.destination_stream'),
+        NEW.manifest_hash,
+        NEW.transfer_id
     FROM json_each(NEW.manifest, '$.transfer_artifacts') AS artifact;
 END;
+
+CREATE TABLE IF NOT EXISTS chunks (
+    chunk_hash TEXT NOT NULL,
+    manifest_hash TEXT NOT NULL,
+    transfer_id TEXT NOT NULL,
+    chunk_json TEXT NOT NULL,
+    chunk_index INTEGER GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.chunk_index')
+    ) STORED,
+    filename TEXT GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.filename')
+    ) STORED,
+    offset_bytes INTEGER GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.offset_bytes')
+    ) STORED,
+    size_bytes INTEGER GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.size_bytes')
+    ) STORED,
+    merkle_root TEXT GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.merkle_root')
+    ) STORED,
+    merkle_leaf_index INTEGER GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.merkle_leaf_index')
+    ) STORED,
+    merkle_proof TEXT GENERATED ALWAYS AS (
+        json_extract(chunk_json, '$.merkle_proof')
+    ) STORED,
+    PRIMARY KEY (chunk_hash, manifest_hash, transfer_id),
+    FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash)
+);
 
 INSERT INTO transfers (manifest_hash, manifest_signature, manifest, node_name)
 VALUES (
@@ -112,4 +145,32 @@ VALUES (
         "previous_manifest_hash": "hash1"
     }',
     'node2'
+);
+
+INSERT INTO chunks (chunk_hash, transfer_id, manifest_hash, chunk_json)
+VALUES (
+    'chunkhash1',
+    'transfer_6f25e1c6e37b4ce183c1a6ab6b0f8b1b',
+    'hash1',
+    '{
+        "chunk_hash": "chunkhash1",
+        "transfer_id": "transfer_6f25e1c6e37b4ce183c1a6ab6b0f8b1b",
+        "chunk_index": 0,
+        "filename": "10mb.txt",
+        "offset_bytes": 0,
+        "size_bytes": 10485760,
+        "manifest_hash": "hash1",
+        "merkle_root": "merkle_root1",
+        "merkle_leaf_index": 0,
+        "merkle_proof": [
+            {
+                "side": "right",
+                "hash": "92fc8c435946558a986393f5f92b2be6247d9299961826e019eb7356bad46b86"
+            },
+            {
+                "side": "right",
+                "hash": "ab7098584b86049b6d29e661024fd5d0f6c58044515a19e51b6696b68b29de63"
+            }
+        ]
+    }'
 );
