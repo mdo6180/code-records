@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS transfers (
     manifest TEXT NOT NULL,
     transfer_id TEXT GENERATED ALWAYS AS (
         json_extract(manifest, '$.transfer_id')
-    ) STORED,
+    ) STORED UNIQUE,
     archive_size INTEGER GENERATED ALWAYS AS (
         json_extract(manifest, '$.archive_size')
     ) STORED,
@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS transfers (
         json_extract(manifest, '$.previous_manifest_hash')
     ) STORED,
     node_name TEXT NOT NULL,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE(manifest_hash)
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS transfer_artifacts (
@@ -30,9 +29,8 @@ CREATE TABLE IF NOT EXISTS transfer_artifacts (
     source_pipeline_name TEXT NOT NULL,
     destination_pipeline_name TEXT NOT NULL,
     destination_stream TEXT NOT NULL,
-    transfer_id TEXT NOT NULL,
     PRIMARY KEY (artifact_hash, manifest_hash),
-    FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash)
+    FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash) ON DELETE CASCADE
 );
 
 /* Trigger to automatically insert transfer artifacts when a new transfer is added */
@@ -46,8 +44,7 @@ BEGIN
         source_pipeline_name,
         destination_pipeline_name,
         destination_stream,
-        manifest_hash,
-        transfer_id
+        manifest_hash
     )
     SELECT
         json_extract(artifact.value, '$.artifact_hash'),
@@ -56,15 +53,13 @@ BEGIN
         json_extract(artifact.value, '$.source_pipeline_name'),
         json_extract(artifact.value, '$.destination_pipeline_name'),
         json_extract(artifact.value, '$.destination_stream'),
-        NEW.manifest_hash,
-        NEW.transfer_id
+        NEW.manifest_hash
     FROM json_each(NEW.manifest, '$.transfer_artifacts') AS artifact;
 END;
 
 CREATE TABLE IF NOT EXISTS chunks (
     chunk_hash TEXT NOT NULL,
     manifest_hash TEXT NOT NULL,
-    transfer_id TEXT NOT NULL,
     chunk_json TEXT NOT NULL,
     chunk_index INTEGER GENERATED ALWAYS AS (
         json_extract(chunk_json, '$.chunk_index')
@@ -87,8 +82,8 @@ CREATE TABLE IF NOT EXISTS chunks (
     merkle_proof TEXT GENERATED ALWAYS AS (
         json_extract(chunk_json, '$.merkle_proof')
     ) STORED,
-    PRIMARY KEY (chunk_hash, manifest_hash, transfer_id),
-    FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash)
+    PRIMARY KEY (chunk_hash, manifest_hash),
+    FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash) ON DELETE CASCADE
 );
 
 INSERT INTO transfers (manifest_hash, manifest_signature, manifest, node_name)
@@ -147,10 +142,10 @@ VALUES (
     'node2'
 );
 
-INSERT INTO chunks (chunk_hash, transfer_id, manifest_hash, chunk_json)
+/*
+INSERT INTO chunks (chunk_hash, manifest_hash, chunk_json)
 VALUES (
     'chunkhash1',
-    'transfer_6f25e1c6e37b4ce183c1a6ab6b0f8b1b',
     'hash1',
     '{
         "chunk_hash": "chunkhash1",
@@ -174,3 +169,4 @@ VALUES (
         ]
     }'
 );
+*/
