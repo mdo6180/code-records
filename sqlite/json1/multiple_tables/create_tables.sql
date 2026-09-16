@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS transfer_artifacts (
     FOREIGN KEY (manifest_hash) REFERENCES transfers(manifest_hash)
 );
 
+/* Trigger to automatically insert transfer artifacts when a new transfer is added */
 CREATE TRIGGER insert_transfer_artifacts
 AFTER INSERT ON transfers
 BEGIN
